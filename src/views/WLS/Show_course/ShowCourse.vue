@@ -362,7 +362,7 @@ export default {
           align: "center",
         },
         {
-          title: "ปีหลักสูตร",
+          title: "หลักสูตร (ปี พ.ศ.)",
           dataIndex: "course_year",
           key: "course_year",
           width: "5%",
