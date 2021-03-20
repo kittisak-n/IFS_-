@@ -135,18 +135,32 @@
             </a-button>
           </a-tooltip>
         </template>
-        <!-- <a-row :gutter="[10, 50]">
+        <a-row :gutter="[10, 50]">
           <a-col :span="24" :style="{ textAlign: 'center' }">
-            <router-link :to="{ path: '/Show_course/InsertCourse' }">
-              <a-button type="primary" style="width: 80%">
-                เพิ่มรายวิชาด้วยตนเอง
+            <!-- <router-link :to="{ path: '/Show_course/InsertCourse' }"> -->
+            <a-tooltip>
+              <template slot="title">ตัวอย่าง Format ที่ใช้ในการ Import</template>
+              <a-button type="primary" style="width: 80%" @click="onExport">
+                ตัวอย่าง Format ที่ใช้ในการ Import
               </a-button>
-            </router-link>
+            </a-tooltip>
+            <!-- <button @click="onExport">
+              ตัวอย่าง Format ที่ใช้ในการ Import
+            </button> -->
+            <!-- </router-link> -->
+          </a-col>
+        </a-row>
+        <a-row>
+          <a-col :span="24" :offset="2">
+            <span style="color:red">*</span><span> หมายเหตุ : ประเภทรายวิชา 0 = ในคณะ 1 = ศึกษาทั่วไป</span><br>
+          </a-col>
+           <a-col :span="24" :offset="6">
+            <span> ผู้สอน = Username ของอาจารย์ผู้สอน</span><br>
           </a-col>
         </a-row>
         <br />
         <hr />
-        <br /> -->
+        <br />
         <a-row :gutter="[10, 10]">
           <a-col :span="6" :style="{ textAlign: 'end' }">
             <p style="margin-top: 5px">ภาคเรียนที่ :</p>
@@ -442,9 +456,126 @@ export default {
       data_section_detail_edit_start_time: "",
       data_section_detail_edit_end_time: "",
       data_section_detail_edit_room: "",
+      // ข้อมูล JSON ทีต้องการ Export
+      json: [
+        {
+          รหัสวิชา: "88510059",
+          ปีหลักสูตร: "2559",
+          ชื่อวิชา: "Logical Thinking and Problem Solving for Innovation",
+          หน่วยกิต: "2",
+          หน่วยกิตบรรยาย: "1",
+          หน่วยกิตปฏิบัติ: "2",
+          หน่วยกิตเรียนรู้ด้วยตัวเอง: "3",
+          ประเภทรายวิชา: "0",
+          กลุ่ม: "1",
+          จำนวนที่ลงทะเบียน: "92",
+          รายละเอียดกลุ่มเรียน: "รหัส 63 วิศวกรรมซอฟแวร์",
+          วัน: "TUE",
+          เวลาเริ่มเรียน: "17:00",
+          เวลาเลิกเรียน: "17:50",
+          ห้อง: "ARR-เรียนออนไลน์",
+          ผู้สอน: "adminIFs@buu.ac.th",
+        },
+        {
+          รหัสวิชา: "",
+          ปีหลักสูตร: "",
+          ชื่อวิชา: "",
+          หน่วยกิต: "",
+          หน่วยกิตบรรยาย: "",
+          หน่วยกิตปฏิบัติ: "",
+          หน่วยกิตเรียนรู้ด้วยตัวเอง: "",
+          ประเภทรายวิชา: "",
+          กลุ่ม: "",
+          จำนวนที่ลงทะเบียน: "",
+          รายละเอียดกลุ่มเรียน: "",
+          วัน: "WED",
+          เวลาเริ่มเรียน: "17:00",
+          เวลาเลิกเรียน: "17:50",
+          ห้อง: "ARR-เรียนออนไลน์",
+          ผู้สอน: "adminIFs@buu.ac.th",
+        },
+        {
+          รหัสวิชา: "88510059",
+          ปีหลักสูตร: "2559",
+          ชื่อวิชา: "Logical Thinking and Problem Solving for Innovation",
+          หน่วยกิต: "2",
+          หน่วยกิตบรรยาย: "1",
+          หน่วยกิตปฏิบัติ: "2",
+          หน่วยกิตเรียนรู้ด้วยตัวเอง: "3",
+          ประเภทรายวิชา: "0",
+          กลุ่ม: "2",
+          จำนวนที่ลงทะเบียน: "74",
+          รายละเอียดกลุ่มเรียน: "รหัส 63 วิศวกรรมซอฟแวร์",
+          วัน: "TUE",
+          เวลาเริ่มเรียน: "17:00",
+          เวลาเลิกเรียน: "17:50",
+          ห้อง: "ARR-เรียนออนไลน์",
+          ผู้สอน: "adminIFs@buu.ac.th",
+        },
+        {
+          รหัสวิชา: "88510059",
+          ปีหลักสูตร: "2559",
+          ชื่อวิชา: "Logical Thinking and Problem Solving for Innovation",
+          หน่วยกิต: "2",
+          หน่วยกิตบรรยาย: "1",
+          หน่วยกิตปฏิบัติ: "2",
+          หน่วยกิตเรียนรู้ด้วยตัวเอง: "3",
+          ประเภทรายวิชา: "0",
+          กลุ่ม: "3",
+          จำนวนที่ลงทะเบียน: "13",
+          รายละเอียดกลุ่มเรียน: "รหัส 63 บัญชี",
+          วัน: "TUE",
+          เวลาเริ่มเรียน: "17:00",
+          เวลาเลิกเรียน: "17:50",
+          ห้อง: "ARR-เรียนออนไลน์",
+          ผู้สอน: "adminIFs@buu.ac.th",
+        },
+        {
+          รหัสวิชา: "88510159",
+          ปีหลักสูตร: "2559",
+          ชื่อวิชา: "Moving Forward in a Digital Society with ICT",
+          หน่วยกิต: "3",
+          หน่วยกิตบรรยาย: "2",
+          หน่วยกิตปฏิบัติ: "2",
+          หน่วยกิตเรียนรู้ด้วยตัวเอง: "5",
+          ประเภทรายวิชา: "0",
+          กลุ่ม: "23",
+          จำนวนที่ลงทะเบียน: "80",
+          รายละเอียดกลุ่มเรียน: "รหัส 62 บริหารท้องถิ่น เลือกกลุ่ม 21 - 24",
+          วัน: "FRI",
+          เวลาเริ่มเรียน: "17:00",
+          เวลาเลิกเรียน: "17:50",
+          ห้อง: "ARR-เรียนออนไลน์",
+          ผู้สอน: "adminIFs@buu.ac.th",
+        },
+      ],
     };
   },
   methods: {
+    onExport() {
+      var wscols = [
+        { wch: 10 },
+        { wch: 10 },
+        { wch: 40 },
+        { wch: 8 },
+        { wch: 20 },
+        { wch: 20 },
+        { wch: 20 },
+        { wch: 20 },
+        { wch: 10 },
+        { wch: 20 },
+        { wch: 25 },
+        { wch: 15 },
+        { wch: 15 },
+        { wch: 15 },
+        { wch: 35 },
+      ];
+      const dataWS = xlsx.utils.json_to_sheet(this.json);
+      dataWS["!cols"] = wscols;
+      const wb = xlsx.utils.book_new();
+      xlsx.utils.book_append_sheet(wb, dataWS);
+      xlsx.writeFile(wb, "Format_Import.xlsx");
+    },
     colse_edit_edtail() {
       this.modal_edit_detail = false;
     },
@@ -768,47 +899,655 @@ export default {
     exportPDF() {
       let self = this;
 
-      for (var i = 0; i < 3; i++) {
-        let data = {
-          number: 1,
-          serial_number: "1AX85PC",
-          name_product: "A5",
-          catagories: "อุปกรณ์",
-          import: 20,
-          export: 10,
-          change: 20,
-          total: 10,
-        };
-        self.data_store.push(data);
-      }
+      // for (var i = 0; i < 3; i++) {
+      //   let data = {
+      //     number: 1,
+      //     serial_number: "1AX85PC",
+      //     name_product: "A5",
+      //     catagories: "อุปกรณ์",
+      //     import: 20,
+      //     export: 10,
+      //     change: 20,
+      //     total: 10,
+      //   };
+      //   self.data_store.push(data);
+      // }
+
+      // var headers = {
+      //   column1: {
+      //     col_1: { text: "ลำดับ", style: "tableheader", rowSpan: 2 },
+      //     col_2: { text: "หมายเลขวัสดุ", style: "tableheader", rowSpan: 2 },
+      //     col_3: { text: "ชื่อวัสดุ", style: "tableheader", rowSpan: 2 },
+      //     col_4: { text: "หมวดหมู่", style: "tableheader", rowSpan: 2 },
+      //     col_5: { text: "จำนวนวัสดุ", style: "tableheader", colSpan: 4 },
+      //     col_6: {
+      //       rowSpan: undefined,
+      //       _maxWidth: 0,
+      //       _minWidth: 0,
+      //       _span: true,
+      //     },
+      //     col_7: {
+      //       rowSpan: undefined,
+      //       _maxWidth: 0,
+      //       _minWidth: 0,
+      //       _span: true,
+      //     },
+      //     col_8: {
+      //       rowSpan: undefined,
+      //       _maxWidth: 0,
+      //       _minWidth: 0,
+      //       _span: true,
+      //     },
+      //   },
+      //   column2: {
+      //     col_1: {
+      //       _span: true,
+      //       _minWidth: 0,
+      //       _maxWidth: 0,
+      //       _columnEndingContext: {
+      //         page: 0,
+      //         x: 5,
+      //         y: 16.200000000000003,
+      //         availableHeight: null,
+      //         availableWidth: 30,
+      //         lastColumnWidth: 30,
+      //       },
+      //       _rowSpanCurrentOffset: 1,
+      //     },
+      //     col_2: {
+      //       _span: true,
+      //       _minWidth: 0,
+      //       _maxWidth: 0,
+      //       _columnEndingContext: {
+      //         page: 0,
+      //         x: 5,
+      //         y: 16.200000000000003,
+      //         availableHeight: null,
+      //         availableWidth: 30,
+      //         lastColumnWidth: 30,
+      //       },
+      //       _rowSpanCurrentOffset: 1,
+      //     },
+      //     col_3: {
+      //       _span: true,
+      //       _minWidth: 0,
+      //       _maxWidth: 0,
+      //       _columnEndingContext: {
+      //         page: 0,
+      //         x: 5,
+      //         y: 16.200000000000003,
+      //         availableHeight: null,
+      //         availableWidth: 30,
+      //         lastColumnWidth: 30,
+      //       },
+      //       _rowSpanCurrentOffset: 1,
+      //     },
+      //     col_4: {
+      //       _span: true,
+      //       _minWidth: 0,
+      //       _maxWidth: 0,
+      //       _columnEndingContext: {
+      //         page: 0,
+      //         x: 5,
+      //         y: 16.200000000000003,
+      //         availableHeight: null,
+      //         availableWidth: 30,
+      //         lastColumnWidth: 30,
+      //       },
+      //       _rowSpanCurrentOffset: 1,
+      //     },
+      //     col_5: { text: "นำเข้า", style: "tableheader" },
+      //     col_6: { text: "เบิกจ่าย", style: "tableheader" },
+      //     col_7: { text: "ปรับยอด", style: "tableheader" },
+      //     col_8: { text: "คงเหลือ", style: "tableheader" },
+      //   },
+      // };
+
+      var body = [];
 
       var headers = {
-        column1: {
-          col_1: { text: "ลำดับ", style: "tableheader", rowSpan: 2 },
-          col_2: { text: "หมายเลขวัสดุ", style: "tableheader", rowSpan: 2 },
-          col_3: { text: "ชื่อวัสดุ", style: "tableheader", rowSpan: 2 },
-          col_4: { text: "หมวดหมู่", style: "tableheader", rowSpan: 2 },
-          col_5: { text: "จำนวนวัสดุ", style: "tableheader", colSpan: 4 },
+        colum1: {
+          col_1: {
+            text: "หมวดวิชา / รหัสวิชา",
+            style: "headersmall",
+            alignment: "center",
+            rowSpan: 3,
+            _margin: null,
+            _inlines: [],
+            _minWidth: 26.168,
+            _maxWidth: 46.344,
+            positions: [
+              {
+                pageNumber: 6,
+                pageOrientation: "landscape",
+                pageInnerHeight: 515.28,
+                pageInnerWidth: 761.89,
+                left: 40,
+                top: 102.80000000000001,
+                verticalRatio: 0.1218754851731098,
+                horizontalRatio: 0,
+              },
+            ],
+          },
+          col_2: {
+            text: "หน่วยกิต",
+            style: "headersmall",
+            alignment: "center",
+            rowSpan: 3,
+            _margin: null,
+            _inlines: [],
+            _minWidth: 19.456,
+            _maxWidth: 19.456,
+            positions: [
+              {
+                pageNumber: 6,
+                pageOrientation: "landscape",
+                pageInnerHeight: 515.28,
+                pageInnerWidth: 761.89,
+                left: 40,
+                top: 102.80000000000001,
+                verticalRatio: 0.1218754851731098,
+                horizontalRatio: 0,
+              },
+            ],
+          },
+          col_3: {
+            text: "วัน-เวลา",
+            style: "headersmall",
+            alignment: "center",
+            rowSpan: 3,
+            _margin: null,
+            _inlines: [],
+            _minWidth: 10.416,
+            _maxWidth: 18.72,
+            positions: [
+              {
+                pageNumber: 6,
+                pageOrientation: "landscape",
+                pageInnerHeight: 515.28,
+                pageInnerWidth: 761.89,
+                left: 40,
+                top: 102.80000000000001,
+                verticalRatio: 0.1218754851731098,
+                horizontalRatio: 0,
+              },
+            ],
+          },
+          col_4: {
+            text: "กลุ่ม",
+            style: "headersmall",
+            alignment: "center",
+            rowSpan: 3,
+            _margin: null,
+            _inlines: [],
+            _minWidth: 9.656,
+            _maxWidth: 9.656,
+            positions: [
+              {
+                pageNumber: 6,
+                pageOrientation: "landscape",
+                pageInnerHeight: 515.28,
+                pageInnerWidth: 761.89,
+                left: 40,
+                top: 102.80000000000001,
+                verticalRatio: 0.1218754851731098,
+                horizontalRatio: 0,
+              },
+            ],
+          },
+          col_5: {
+            text: "จำนวนหน่วยกิต",
+            style: "headersmall",
+            alignment: "center",
+            colSpan: 2,
+            _margin: null,
+            _inlines: [],
+            _minWidth: 35.224000000000004,
+            _maxWidth: 35.224000000000004,
+            positions: [
+              {
+                pageNumber: 6,
+                pageOrientation: "landscape",
+                pageInnerHeight: 515.28,
+                pageInnerWidth: 761.89,
+                left: 40,
+                top: 102.80000000000001,
+                verticalRatio: 0.1218754851731098,
+                horizontalRatio: 0,
+              },
+            ],
+          },
           col_6: {
-            rowSpan: undefined,
-            _maxWidth: 0,
-            _minWidth: 0,
             _span: true,
+            _minWidth: 0,
+            _maxWidth: 0,
           },
           col_7: {
-            rowSpan: undefined,
-            _maxWidth: 0,
-            _minWidth: 0,
-            _span: true,
+            text: "จำนวนนิสิตที่ลงทะเบียน\nเรียนในรายวิชา",
+            style: "headersmall",
+            alignment: "center",
+            rowSpan: 3,
+            _margin: null,
+            _inlines: [],
+            _minWidth: 52.904,
+            _maxWidth: 52.904,
+            positions: [
+              {
+                pageNumber: 6,
+                pageOrientation: "landscape",
+                pageInnerHeight: 515.28,
+                pageInnerWidth: 761.89,
+                left: 40,
+                top: 102.80000000000001,
+                verticalRatio: 0.1218754851731098,
+                horizontalRatio: 0,
+              },
+              {
+                pageNumber: 6,
+                pageOrientation: "landscape",
+                pageInnerHeight: 515.28,
+                pageInnerWidth: 761.89,
+                left: 40,
+                top: 102.80000000000001,
+                verticalRatio: 0.1218754851731098,
+                horizontalRatio: 0,
+              },
+            ],
           },
           col_8: {
-            rowSpan: undefined,
-            _maxWidth: 0,
-            _minWidth: 0,
+            text: "จำนวนกลุ่มที่สอน",
+            style: "headersmall",
+            alignment: "center",
+            colSpan: 2,
+            _margin: null,
+            _inlines: [],
+            _minWidth: 38.736000000000004,
+            _maxWidth: 38.736000000000004,
+            positions: [
+              {
+                pageNumber: 6,
+                pageOrientation: "landscape",
+                pageInnerHeight: 515.28,
+                pageInnerWidth: 761.89,
+                left: 40,
+                top: 102.80000000000001,
+                verticalRatio: 0.1218754851731098,
+                horizontalRatio: 0,
+              },
+            ],
+          },
+          col_9: {
             _span: true,
+            _minWidth: 0,
+            _maxWidth: 0,
+          },
+          col_10: {
+            text: "ภาระงาน",
+            style: "headersmall",
+            alignment: "center",
+            colSpan: 3,
+            _margin: null,
+            _inlines: [],
+            _minWidth: 20.136,
+            _maxWidth: 20.136,
+            positions: [
+              {
+                pageNumber: 6,
+                pageOrientation: "landscape",
+                pageInnerHeight: 515.28,
+                pageInnerWidth: 761.89,
+                left: 40,
+                top: 102.80000000000001,
+                verticalRatio: 0.1218754851731098,
+                horizontalRatio: 0,
+              },
+            ],
+          },
+          col_11: {
+            _span: true,
+            _minWidth: 0,
+            _maxWidth: 0,
+          },
+          col_12: {
+            _span: true,
+            _minWidth: 0,
+            _maxWidth: 0,
+          },
+          col_13: {
+            text: "ภาระงานรวม(นก)",
+            style: "headersmall",
+            alignment: "center",
+            rowSpan: 3,
+            _margin: null,
+            _inlines: [],
+            _minWidth: 39.632,
+            _maxWidth: 39.632,
+            positions: [
+              {
+                pageNumber: 6,
+                pageOrientation: "landscape",
+                pageInnerHeight: 515.28,
+                pageInnerWidth: 761.89,
+                left: 40,
+                top: 102.80000000000001,
+                verticalRatio: 0.1218754851731098,
+                horizontalRatio: 0,
+              },
+              {
+                pageNumber: 6,
+                pageOrientation: "landscape",
+                pageInnerHeight: 515.28,
+                pageInnerWidth: 761.89,
+                left: 40,
+                top: 102.80000000000001,
+                verticalRatio: 0.1218754851731098,
+                horizontalRatio: 0,
+              },
+            ],
+          },
+          col_14: {
+            text: "สัดส่วน\nภาระงาน\nที่สอน\n(สัปดาห์)",
+            style: "headersmall",
+            alignment: "center",
+            rowSpan: 3,
+            _margin: null,
+            _inlines: [],
+            _minWidth: 20.136,
+            _maxWidth: 20.136,
+            positions: [
+              {
+                pageNumber: 6,
+                pageOrientation: "landscape",
+                pageInnerHeight: 515.28,
+                pageInnerWidth: 761.89,
+                left: 40,
+                top: 102.80000000000001,
+                verticalRatio: 0.1218754851731098,
+                horizontalRatio: 0,
+              },
+              {
+                pageNumber: 6,
+                pageOrientation: "landscape",
+                pageInnerHeight: 515.28,
+                pageInnerWidth: 761.89,
+                left: 40,
+                top: 102.80000000000001,
+                verticalRatio: 0.1218754851731098,
+                horizontalRatio: 0,
+              },
+              {
+                pageNumber: 6,
+                pageOrientation: "landscape",
+                pageInnerHeight: 515.28,
+                pageInnerWidth: 761.89,
+                left: 40,
+                top: 102.80000000000001,
+                verticalRatio: 0.1218754851731098,
+                horizontalRatio: 0,
+              },
+              {
+                pageNumber: 6,
+                pageOrientation: "landscape",
+                pageInnerHeight: 515.28,
+                pageInnerWidth: 761.89,
+                left: 40,
+                top: 102.80000000000001,
+                verticalRatio: 0.1218754851731098,
+                horizontalRatio: 0,
+              },
+            ],
+          },
+          col_15: {
+            text: "ภาระงาน\nรวมที่ได้\nตามสัดส่วน\nการสอน(นก)",
+            style: "headersmall",
+            alignment: "center",
+            rowSpan: 3,
+            _margin: null,
+            _inlines: [],
+            _minWidth: 28.752,
+            _maxWidth: 28.752,
+            positions: [
+              {
+                pageNumber: 6,
+                pageOrientation: "landscape",
+                pageInnerHeight: 515.28,
+                pageInnerWidth: 761.89,
+                left: 40,
+                top: 102.80000000000001,
+                verticalRatio: 0.1218754851731098,
+                horizontalRatio: 0,
+              },
+              {
+                pageNumber: 6,
+                pageOrientation: "landscape",
+                pageInnerHeight: 515.28,
+                pageInnerWidth: 761.89,
+                left: 40,
+                top: 102.80000000000001,
+                verticalRatio: 0.1218754851731098,
+                horizontalRatio: 0,
+              },
+              {
+                pageNumber: 6,
+                pageOrientation: "landscape",
+                pageInnerHeight: 515.28,
+                pageInnerWidth: 761.89,
+                left: 40,
+                top: 102.80000000000001,
+                verticalRatio: 0.1218754851731098,
+                horizontalRatio: 0,
+              },
+              {
+                pageNumber: 6,
+                pageOrientation: "landscape",
+                pageInnerHeight: 515.28,
+                pageInnerWidth: 761.89,
+                left: 40,
+                top: 102.80000000000001,
+                verticalRatio: 0.1218754851731098,
+                horizontalRatio: 0,
+              },
+            ],
           },
         },
-        column2: {
+        colum2: {
+          col_1: {
+            _span: true,
+            _minWidth: 0,
+            _maxWidth: 0,
+            _rowSpanCurrentOffset: 1,
+          },
+          col_2: {
+            _span: true,
+            _minWidth: 0,
+            _maxWidth: 0,
+            _rowSpanCurrentOffset: 1,
+          },
+          col_3: {
+            _span: true,
+            _minWidth: 0,
+            _maxWidth: 0,
+            _rowSpanCurrentOffset: 1,
+          },
+          col_4: {
+            _span: true,
+            _minWidth: 0,
+            _maxWidth: 0,
+            _rowSpanCurrentOffset: 1,
+          },
+          col_5: {
+            text: "บรรยาย",
+            style: "headersmall",
+            alignment: "center",
+            rowSpan: 2,
+            _margin: null,
+            _inlines: [],
+            _minWidth: 17.688,
+            _maxWidth: 17.688,
+            positions: [
+              {
+                pageNumber: 6,
+                pageOrientation: "landscape",
+                pageInnerHeight: 515.28,
+                pageInnerWidth: 761.89,
+                left: 40,
+                top: 102.80000000000001,
+                verticalRatio: 0.1218754851731098,
+                horizontalRatio: 0,
+              },
+            ],
+          },
+          col_6: {
+            text: "lab",
+            style: "headersmall",
+            alignment: "center",
+            rowSpan: 2,
+            _margin: null,
+            _inlines: [],
+            _minWidth: 8.120000000000001,
+            _maxWidth: 8.120000000000001,
+            positions: [
+              {
+                pageNumber: 6,
+                pageOrientation: "landscape",
+                pageInnerHeight: 515.28,
+                pageInnerWidth: 761.89,
+                left: 40,
+                top: 102.80000000000001,
+                verticalRatio: 0.1218754851731098,
+                horizontalRatio: 0,
+              },
+            ],
+          },
+          col_7: {
+            _span: true,
+            _minWidth: 0,
+            _maxWidth: 0,
+            _rowSpanCurrentOffset: 1,
+          },
+          col_8: {
+            text: "บรรยาย",
+            style: "headersmall",
+            alignment: "center",
+            rowSpan: 2,
+            _margin: null,
+            _inlines: [],
+            _minWidth: 17.688,
+            _maxWidth: 17.688,
+            positions: [
+              {
+                pageNumber: 6,
+                pageOrientation: "landscape",
+                pageInnerHeight: 515.28,
+                pageInnerWidth: 761.89,
+                left: 40,
+                top: 102.80000000000001,
+                verticalRatio: 0.1218754851731098,
+                horizontalRatio: 0,
+              },
+            ],
+          },
+          col_9: {
+            text: "lab",
+            style: "headersmall",
+            alignment: "center",
+            rowSpan: 2,
+            _margin: null,
+            _inlines: [],
+            _minWidth: 8.120000000000001,
+            _maxWidth: 8.120000000000001,
+            positions: [
+              {
+                pageNumber: 6,
+                pageOrientation: "landscape",
+                pageInnerHeight: 515.28,
+                pageInnerWidth: 761.89,
+                left: 40,
+                top: 102.80000000000001,
+                verticalRatio: 0.1218754851731098,
+                horizontalRatio: 0,
+              },
+            ],
+          },
+          col_10: {
+            text: "ภาระงานพื้นฐาน",
+            style: "headersmall",
+            alignment: "center",
+            rowSpan: 2,
+            _margin: null,
+            _inlines: [],
+            _minWidth: 36.584,
+            _maxWidth: 36.584,
+            positions: [
+              {
+                pageNumber: 6,
+                pageOrientation: "landscape",
+                pageInnerHeight: 515.28,
+                pageInnerWidth: 761.89,
+                left: 40,
+                top: 102.80000000000001,
+                verticalRatio: 0.1218754851731098,
+                horizontalRatio: 0,
+              },
+              {
+                pageNumber: 6,
+                pageOrientation: "landscape",
+                pageInnerHeight: 515.28,
+                pageInnerWidth: 761.89,
+                left: 40,
+                top: 102.80000000000001,
+                verticalRatio: 0.1218754851731098,
+                horizontalRatio: 0,
+              },
+            ],
+          },
+          col_11: {
+            text: "ภาระงานตรวจงาน",
+            style: "headersmall",
+            alignment: "center",
+            colSpan: 2,
+            _margin: null,
+            _inlines: [],
+            _minWidth: 40.856,
+            _maxWidth: 40.856,
+            positions: [
+              {
+                pageNumber: 6,
+                pageOrientation: "landscape",
+                pageInnerHeight: 515.28,
+                pageInnerWidth: 761.89,
+                left: 40,
+                top: 102.80000000000001,
+                verticalRatio: 0.1218754851731098,
+                horizontalRatio: 0,
+              },
+            ],
+          },
+          col_12: {
+            _span: true,
+            _minWidth: 0,
+            _maxWidth: 0,
+          },
+          col_13: {
+            _span: true,
+            _minWidth: 0,
+            _maxWidth: 0,
+            _rowSpanCurrentOffset: 1,
+          },
+          col_14: {
+            _span: true,
+            _minWidth: 0,
+            _maxWidth: 0,
+            _rowSpanCurrentOffset: 1,
+          },
+          col_15: {
+            _span: true,
+            _minWidth: 0,
+            _maxWidth: 0,
+            _rowSpanCurrentOffset: 1,
+          },
+        },
+        colum3: {
           col_1: {
             _span: true,
             _minWidth: 0,
@@ -816,12 +1555,12 @@ export default {
             _columnEndingContext: {
               page: 0,
               x: 5,
-              y: 16.200000000000003,
+              y: 11.8,
               availableHeight: null,
-              availableWidth: 30,
-              lastColumnWidth: 30,
+              availableWidth: 100,
+              lastColumnWidth: 100,
             },
-            _rowSpanCurrentOffset: 1,
+            _rowSpanCurrentOffset: 2,
           },
           col_2: {
             _span: true,
@@ -829,13 +1568,13 @@ export default {
             _maxWidth: 0,
             _columnEndingContext: {
               page: 0,
-              x: 5,
-              y: 16.200000000000003,
+              x: 114,
+              y: 11.8,
               availableHeight: null,
-              availableWidth: 30,
-              lastColumnWidth: 30,
+              availableWidth: 25,
+              lastColumnWidth: 25,
             },
-            _rowSpanCurrentOffset: 1,
+            _rowSpanCurrentOffset: 2,
           },
           col_3: {
             _span: true,
@@ -843,13 +1582,13 @@ export default {
             _maxWidth: 0,
             _columnEndingContext: {
               page: 0,
-              x: 5,
-              y: 16.200000000000003,
+              x: 148,
+              y: 11.8,
               availableHeight: null,
-              availableWidth: 30,
-              lastColumnWidth: 30,
+              availableWidth: 100,
+              lastColumnWidth: 100,
             },
-            _rowSpanCurrentOffset: 1,
+            _rowSpanCurrentOffset: 2,
           },
           col_4: {
             _span: true,
@@ -857,23 +1596,204 @@ export default {
             _maxWidth: 0,
             _columnEndingContext: {
               page: 0,
-              x: 5,
-              y: 16.200000000000003,
+              x: 257,
+              y: 11.8,
+              availableHeight: null,
+              availableWidth: 40,
+              lastColumnWidth: 40,
+            },
+            _rowSpanCurrentOffset: 2,
+          },
+          col_5: {
+            _span: true,
+            _minWidth: 0,
+            _maxWidth: 0,
+            _columnEndingContext: {
+              page: 0,
+              x: 306,
+              y: 25.6,
               availableHeight: null,
               availableWidth: 30,
               lastColumnWidth: 30,
             },
             _rowSpanCurrentOffset: 1,
           },
-          col_5: { text: "นำเข้า", style: "tableheader" },
-          col_6: { text: "เบิกจ่าย", style: "tableheader" },
-          col_7: { text: "ปรับยอด", style: "tableheader" },
-          col_8: { text: "คงเหลือ", style: "tableheader" },
+          col_6: {
+            _span: true,
+            _minWidth: 0,
+            _maxWidth: 0,
+            _columnEndingContext: {
+              page: 0,
+              x: 345,
+              y: 25.6,
+              availableHeight: null,
+              availableWidth: 30,
+              lastColumnWidth: 30,
+            },
+            _rowSpanCurrentOffset: 1,
+          },
+          col_7: {
+            _span: true,
+            _minWidth: 0,
+            _maxWidth: 0,
+            _columnEndingContext: {
+              page: 0,
+              x: 384,
+              y: 20.6,
+              availableHeight: null,
+              availableWidth: 60,
+              lastColumnWidth: 60,
+            },
+            _rowSpanCurrentOffset: 2,
+          },
+          col_8: {
+            _span: true,
+            _minWidth: 0,
+            _maxWidth: 0,
+            _columnEndingContext: {
+              page: 0,
+              x: 453,
+              y: 25.6,
+              availableHeight: null,
+              availableWidth: 30,
+              lastColumnWidth: 30,
+            },
+            _rowSpanCurrentOffset: 1,
+          },
+          col_9: {
+            _span: true,
+            _minWidth: 0,
+            _maxWidth: 0,
+            _columnEndingContext: {
+              page: 0,
+              x: 492,
+              y: 25.6,
+              availableHeight: null,
+              availableWidth: 30,
+              lastColumnWidth: 30,
+            },
+            _rowSpanCurrentOffset: 1,
+          },
+          col_10: {
+            _span: true,
+            _minWidth: 0,
+            _maxWidth: 0,
+            _columnEndingContext: {
+              page: 0,
+              x: 531,
+              y: 34.400000000000006,
+              availableHeight: null,
+              availableWidth: 30,
+              lastColumnWidth: 30,
+            },
+            _rowSpanCurrentOffset: 1,
+          },
+          col_11: {
+            text: "ชั่วโมง\nบรรยาย",
+            style: "headersmall",
+            alignment: "center",
+            _margin: null,
+            _inlines: [],
+            _minWidth: 17.688,
+            _maxWidth: 17.688,
+            positions: [
+              {
+                pageNumber: 6,
+                pageOrientation: "landscape",
+                pageInnerHeight: 515.28,
+                pageInnerWidth: 761.89,
+                left: 40,
+                top: 102.80000000000001,
+                verticalRatio: 0.1218754851731098,
+                horizontalRatio: 0,
+              },
+              {
+                pageNumber: 6,
+                pageOrientation: "landscape",
+                pageInnerHeight: 515.28,
+                pageInnerWidth: 761.89,
+                left: 40,
+                top: 102.80000000000001,
+                verticalRatio: 0.1218754851731098,
+                horizontalRatio: 0,
+              },
+            ],
+          },
+          col_12: {
+            text: "ชั่วโมง \nlab",
+            style: "headersmall",
+            alignment: "center",
+            _margin: null,
+            _inlines: [],
+            _minWidth: 14.248000000000001,
+            _maxWidth: 14.248000000000001,
+            positions: [
+              {
+                pageNumber: 6,
+                pageOrientation: "landscape",
+                pageInnerHeight: 515.28,
+                pageInnerWidth: 761.89,
+                left: 40,
+                top: 102.80000000000001,
+                verticalRatio: 0.1218754851731098,
+                horizontalRatio: 0,
+              },
+              {
+                pageNumber: 6,
+                pageOrientation: "landscape",
+                pageInnerHeight: 515.28,
+                pageInnerWidth: 761.89,
+                left: 40,
+                top: 102.80000000000001,
+                verticalRatio: 0.1218754851731098,
+                horizontalRatio: 0,
+              },
+            ],
+          },
+          col_13: {
+            _span: true,
+            _minWidth: 0,
+            _maxWidth: 0,
+            _columnEndingContext: {
+              page: 0,
+              x: 648,
+              y: 20.6,
+              availableHeight: null,
+              availableWidth: 30,
+              lastColumnWidth: 30,
+            },
+            _rowSpanCurrentOffset: 2,
+          },
+          col_14: {
+            _span: true,
+            _minWidth: 0,
+            _maxWidth: 0,
+            _columnEndingContext: {
+              page: 0,
+              x: 687,
+              y: 38.2,
+              availableHeight: null,
+              availableWidth: 30,
+              lastColumnWidth: 30,
+            },
+            _rowSpanCurrentOffset: 2,
+          },
+          col_15: {
+            _span: true,
+            _minWidth: 0,
+            _maxWidth: 0,
+            _columnEndingContext: {
+              page: 0,
+              x: 726,
+              y: 38.2,
+              availableHeight: null,
+              availableWidth: 30,
+              lastColumnWidth: 30,
+            },
+            _rowSpanCurrentOffset: 2,
+          },
         },
       };
-
-      var body = [];
-
       for (var item in headers) {
         var header = headers[item];
         var row = new Array();
@@ -885,22 +1805,42 @@ export default {
         row.push(header.col_6);
         row.push(header.col_7);
         row.push(header.col_8);
+        row.push(header.col_9);
+        row.push(header.col_10);
+        row.push(header.col_11);
+        row.push(header.col_12);
+        row.push(header.col_13);
+        row.push(header.col_14);
+        row.push(header.col_15);
         body.push(row);
       }
+      // for (var item in headers) {
+      //   var header = headers[item];
+      //   var row = new Array();
+      //   row.push(header.col_1);
+      //   row.push(header.col_2);
+      //   row.push(header.col_3);
+      //   row.push(header.col_4);
+      //   row.push(header.col_5);
+      //   row.push(header.col_6);
+      //   row.push(header.col_7);
+      //   row.push(header.col_8);
+      //   body.push(row);
+      // }
 
-      for (var key in self.data_store) {
-        var data = self.data_store[key];
-        var newrow = new Array();
-        newrow.push(data.number.toString());
-        newrow.push(data.serial_number.toString());
-        newrow.push(data.name_product.toString());
-        newrow.push(data.catagories.toString());
-        newrow.push(data.import.toString());
-        newrow.push(data.export.toString());
-        newrow.push(data.change.toString());
-        newrow.push(data.total.toString());
-        body.push(newrow);
-      }
+      // for (var key in self.data_store) {
+      //   var data = self.data_store[key];
+      //   var newrow = new Array();
+      //   newrow.push(data.number.toString());
+      //   newrow.push(data.serial_number.toString());
+      //   newrow.push(data.name_product.toString());
+      //   newrow.push(data.catagories.toString());
+      //   newrow.push(data.import.toString());
+      //   newrow.push(data.export.toString());
+      //   newrow.push(data.change.toString());
+      //   newrow.push(data.total.toString());
+      //   body.push(newrow);
+      // }
       console.log("Body", body);
 
       pdfMake.vfs = pdfFonts.pdfMake.vfs; // 2. set vfs pdf font
@@ -915,9 +1855,45 @@ export default {
       var dd = {
         content: [
           {
+            pageSize: "A4",
+            pageOrientation: "landscape",
+            pageBreak: "before",
             table: {
-              widths: [30, "*", "*", "*", "*", "*", "*", "*"],
-              heights: ["*", "*", "*", "*", "*", "*", "*", "*"],
+              widths: [
+                100,
+                25,
+                100,
+                40,
+                30,
+                30,
+                60,
+                30,
+                30,
+                30,
+                30,
+                30,
+                30,
+                30,
+                30,
+                // 15 col
+              ],
+              heights: [
+                "*",
+                "*",
+                "*",
+                "*",
+                "*",
+                "*",
+                "*",
+                "*",
+                "*",
+                "*",
+                "*",
+                "*",
+                "*",
+                "*",
+                "*",
+              ],
               body: body,
             },
           },
