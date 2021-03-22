@@ -36,12 +36,6 @@
                   <b>ชื่อผู้ใช้งาน:</b>
                 </a-col>
                 <a-col :span="12">
-                  <!-- <a-input-search style="width:80%">
-                    <a-button type="primary" icon="search" style="width:20%">
-                      ตรวจสอบผู้ใช้งาน
-                    </a-button>
-                  </a-input-search> -->
-
                   <a-input-search
                     placeholder="กรอกชื่อผู้ใช้งาน"
                     style="width:100%"
@@ -59,11 +53,9 @@
               <div v-if="chackUsername_search">
                 <a-row :gutter="[8, 8]" type="flex">
                   <a-col :span="6" style="text-align:end">
-                    <b>ชื่อ (อังกฤษ):</b>
+                    <b>ชื่อ-นามสกุล (อังกฤษ):</b>
                   </a-col>
-                  <!-- <a-col :span="4">
-                  <a-input style="width:100%" v-model="nameEng" disabled />
-                </a-col> -->
+
                   <a-col :span="6">
                     <a-input
                       style="width:100%"
@@ -90,9 +82,6 @@
                       v-model="person.prefix_id"
                       placeholder="โปรดเลือกคำนำหน้า"
                     >
-                      <!-- <a-select-option :value="null" v-if="(value = null)">
-                        คำนำหน้าชื่อ
-                      </a-select-option> -->
                       <a-select-option
                         v-for="item in dataPrefix"
                         :key="item.key"
@@ -125,19 +114,19 @@
                   </a-col>
                   <a-col :span="6">
                     <a-select
+                      show-search
                       style="width:100%"
                       v-model="person.position_id"
                       placeholder="โปรดเลือกตำแหน่ง"
+                      option-filter-prop="children"
+                      @change="getAllPosition()"
                     >
-                      <!-- <a-select-option :value="null" v-if="(value = null)">
-                        ตำแหน่ง
-                      </a-select-option> -->
                       <a-select-option
                         v-for="item in dataPosition"
                         :key="item.key"
-                        :value="item.postion_id"
+                        :value="item.position_id"
                       >
-                        {{ item.postition_name }}
+                        {{ item.position_name }}
                       </a-select-option>
                     </a-select>
                   </a-col>
@@ -155,13 +144,6 @@
                 </a-row>
                 <br />
                 <a-row :gutter="[8, 8]" type="flex" justify="center">
-                  <!-- <a-col :span="2" style="text-align:end">
-                  จังหวัด :
-                </a-col>
-
-                <a-col :span="2">
-                  <a-input style="width:100%" />
-                </a-col> -->
                   <a-col :span="2" style="text-align:end">
                     <b>จังหวัด:</b>
                   </a-col>
@@ -217,7 +199,7 @@
                       style="width: 100%"
                       v-model="person.district_id"
                       :filter-option="filterOptionDistrict"
-                      @change="getAllDistrict()"
+                      @change="getzipCode()"
                     >
                       <a-select-option
                         v-for="item in dataDistricts"
@@ -232,7 +214,12 @@
                     <b>รหัสไปรษณีย์:</b>
                   </a-col>
                   <a-col :span="4">
-                    <a-select
+                    <a-input
+                      style="width:100%"
+                      placeholder="กรอกรหัสไปรษณีย์"
+                      v-model="person.zipcode"
+                    />
+                    <!-- <a-select
                       style="width:100%"
                       v-model="person.district_id"
                       disabled
@@ -247,7 +234,7 @@
                       >
                         {{ item.zip_code }}
                       </a-select-option>
-                    </a-select>
+                    </a-select> -->
                   </a-col>
                 </a-row>
               </div>
@@ -263,12 +250,16 @@
             >
               <br />
               <a-row
-                :gutter="[10, 10]"
+                :gutter="[15, 15]"
                 v-for="(item, index) in person.position_access"
                 :key="item.key"
                 type="flex"
                 justify="center"
               >
+                <a-col :span="4" style="text-align:end">
+                  <b> ประเภทสิทธิ์ผู้ใช้งาน:</b>
+                </a-col>
+
                 <a-col :span="10">
                   <a-select
                     show-search
@@ -293,18 +284,21 @@
                     </a-select-option>
                   </a-select>
                 </a-col>
+
                 <a-col :span="1">
-                  <a-button
-                    type="primary"
-                    icon="search"
-                    :disabled="
-                      person.position_access[index].position_access_id ==
-                        undefined
-                    "
-                    @click="getPositionDetail(index)"
-                  />
+                  <a-tooltip placement="top" title="ข้อมูลสิทธิ์ที่เลือก">
+                    <a-button
+                      type="primary"
+                      icon="search"
+                      :disabled="
+                        person.position_access[index].position_access_id ==
+                          undefined
+                      "
+                      @click="getPositionDetail(index)"
+                    />
+                  </a-tooltip>
                 </a-col>
-                <a-col :span="1">
+                <!-- <a-col :span="1">
                   <a-button
                     type="success"
                     icon="plus"
@@ -319,7 +313,7 @@
                     "
                     v-if="index < person.position_access.length - 1"
                   />
-                </a-col>
+                </a-col> -->
               </a-row>
 
               <br />
@@ -345,7 +339,6 @@
                 </a-col>
                 <a-col :span="6" v-model="nameEngVeri">
                   <span style="width:100%"> {{ nameEngVeri }} </span>
-                  <!-- <a-input style="width:100%" v-model="nameEngVeri" /> -->
                 </a-col>
               </a-row>
               <br />
@@ -357,7 +350,6 @@
                   <span style="width:100%">
                     {{ prefixVeri }} {{ nameThaiVeri }}
                   </span>
-                  <!-- <a-input style="width:100%" v-model="nameThaiVeri" /> -->
                 </a-col>
               </a-row>
               <br />
@@ -403,57 +395,6 @@
                 </a-col>
               </a-row>
               <br />
-              <!-- <hr style="width:90%" />
-              <br />
-
-              <a-row :gutter="[8, 8]" type="flex" justify="center">
-                <a-col :span="24" style="text-align:center">
-                  <h3>ตรวจสอบสิทธิ์</h3>
-                </a-col>
-              </a-row>
-              <br /> -->
-
-              <!-- <a-row :gutter="[8, 8]">
-                <a-col :span="24" :offset="10">
-                  <b>ฝ่ายธุรการ</b>
-                </a-col>
-              </a-row>
-              <a-row :gutter="[8, 8]">
-                <a-col :span="24" :offset="11">
-                  <p>ระบบคำนวณภาระงาน</p>
-                </a-col>
-              </a-row>
-              <a-row :gutter="[8, 8]">
-                <a-col :span="24" :offset="12">
-                  <p>ข้อมูลรายวิชา</p>
-                </a-col>
-              </a-row>
-              <a-row :gutter="[8, 8]">
-                <a-col :span="24" :offset="12">
-                  <p>สรุปภาระงาน</p>
-                </a-col>
-              </a-row>
-
-              <a-row :gutter="[8, 8]">
-                <a-col :span="24" :offset="10">
-                  <b>ฝ่ายบุคลากร</b>
-                </a-col>
-              </a-row>
-              <a-row :gutter="[8, 8]">
-                <a-col :span="24" :offset="11">
-                  <p>ระบบเบิกจ่ายวัสดุ</p>
-                </a-col>
-              </a-row>
-              <a-row :gutter="[8, 8]">
-                <a-col :span="24" :offset="12">
-                  <p>รายการเบิกจ่ายวัสดุ</p>
-                </a-col>
-              </a-row>
-              <a-row :gutter="[8, 8]">
-                <a-col :span="24" :offset="12">
-                  <p>เบิกจ่ายวัสดุ</p>
-                </a-col>
-              </a-row> -->
             </a-col>
           </a-row>
           <br />
@@ -515,53 +456,33 @@
 
     <a-modal
       v-model="visible_adduser"
-      title="ตรวจสอบสิทธิ์การเข้าถึง"
+      title="ตรวจสอบสิทธิ์"
       @ok="handleOk"
+      class="modal-th-bold"
       :footer="null"
     >
       <a-table
         :columns="columns_modal_manage"
         :data-source="systemPositionAccess"
         size="small"
+        class="th-bold"
         :pagination="false"
         bordered
       >
-        ]
-
         <span slot="expandedRowRender" slot-scope="record" style="margin: 0">
           <div v-for="(item, index) in record.sub_system" :key="index">
             <p v-if="item.sub_system_name_TH == null">
               ไม่มีระบบย่อย
             </p>
-            <p v-else>
-              {{ item.sub_system_name_TH }}
-            </p>
+            <p v-else>- {{ item.sub_system_name_TH }}</p>
           </div>
         </span>
-        <!-- <template slot="title" >
-            Header
-          </template> -->
-        <!-- <template slot="footer">
-            Footer
-          </template> -->
       </a-table>
-
-      <!-- <a-row :gutter="[8, 8]">
-        <a-col :span="24" v-model="system">
-          <p>{{ system }}</p>
-        </a-col>
-      </a-row>
-
-      <a-row :gutter="[8, 8]">
-        <a-col :span="24" v-model="sub_system">
-          <p>{{ sub_system }}</p>
-        </a-col>
-      </a-row> -->
     </a-modal>
 
     <a-modal
       v-model="visible_LDAP"
-      title="เข้าสู่ระบบมหาวิทยาลัยบรูพาของท่านเพื่อเพิ่มผู้ใช้งาน"
+      title="เข้าสู่บัญชีผู้ใช้งานของมหาวิทยาลัยบูรพา"
       @ok="handleOk"
       :footer="null"
     >
@@ -572,6 +493,15 @@
           </a-col> -->
         </a-row>
         <a-row :gutter="[8, 16]">
+          <p>
+            - ในขั้นตอนนี้จำเป็นต้องมีการเชื่อมต่อบัญชีผู้ใช้งาน
+          </p>
+          <p>
+            - ขอให้ผู้ใช้งานต้องกรอกข้อมูลในการค้นหาผู้ใช้งาน
+          </p>
+          <p>
+            - กรุณากรอกชื่อผู้ใช้งานและรหัสผ่านเป็นเงื่อนไขในการค้นหาผู้ใช้
+          </p>
           <a-col :span="24">
             <a-input
               type="text"
@@ -592,7 +522,6 @@
           </a-col>
         </a-row>
         <br />
-
         <a-row :gutter="[8, 8]">
           <a-col :span="24">
             <a-button
@@ -658,7 +587,7 @@ export default {
         province_id: undefined,
         amphure_id: undefined,
         district_id: undefined,
-        zipcode: undefined,
+        zipcode: "",
         create_by: this.$store.state.user.user_id,
       },
       dataPrefix: [],
@@ -708,7 +637,7 @@ export default {
       loading: true,
       username: "",
       password: "",
-      indexpostion: 1,
+      indexposition: 1,
       checkLogin: false,
       // province_id: 11,
       checkUser: false,
@@ -802,6 +731,15 @@ export default {
           console.log(self.dataDistricts);
         });
     },
+    getzipCode() {
+      const self = this;
+      self.person.zipcode =
+        self.dataDistricts[
+          self.dataDistricts.findIndex(
+            (ele) => ele.value == self.person.district_id
+          )
+        ].zip_code;
+    },
     getAllPosition() {
       const self = this;
       axios
@@ -813,8 +751,8 @@ export default {
           data.results.forEach(function(ele, index) {
             let data = {
               key: index + 1,
-              postion_id: ele.postion_id,
-              postition_name: ele.postition_name,
+              position_id: ele.position_id,
+              position_name: ele.position_name,
             };
             self.dataPosition.push(data);
           });
@@ -824,7 +762,7 @@ export default {
     getAllPositionAccess() {
       const self = this;
       axios
-        .post("http://localhost:8080/personRouters/getPostionAccess")
+        .post("http://localhost:8080/personRouters/getAllPositionAccess")
         .then(function(res) {
           console.log(res.data);
           const data = res.data;
@@ -832,8 +770,8 @@ export default {
           data.results.forEach(function(ele, index) {
             self.dataPositionAccess.push({
               key: index + 1,
-              position_access_id: ele.postion_access_id,
-              position_access_name_TH: ele.postion_access_name_TH,
+              position_access_id: ele.position_access_id,
+              position_access_name_TH: ele.position_access_name_TH,
               position_access_status: false,
             });
           });
@@ -861,7 +799,7 @@ export default {
       if (!this.checkSpecificKey(this.username)) {
         this.$notification["warning"]({
           message: "การแจ้งเตือน",
-          description: "อักษรพิเศษและช่องว่างไม่สามารถกรอกได้",
+          description: "ช่องว่างไม่สามารถกรอกได้",
           duration: 3,
         });
       } else if (this.username == "") {
@@ -927,12 +865,12 @@ export default {
       }
     },
     checkSpecificKey(data) {
-      var specialKey =
-        "[`~!#$^&*()=|{}':;',\\[\\].<>/?~！#￥……&*（）——|{}【】‘；：”“'。，、？]‘'";
+      // var specialKey =
+      //   "[`~!#$^&*()=|{}':;',\\[\\].<>/?~！#￥……&*（）——|{}【】‘；：”“'。，、？]‘'";
       for (var i = 0; i < data.length; i++) {
-        if (specialKey.indexOf(data.substr(i, 1)) != -1) {
-          return false;
-        }
+        // if (specialKey.indexOf(data.substr(i, 1)) != -1) {
+        //   return false;
+        // }
         if (data[i] == " ") {
           return false;
         }
@@ -964,8 +902,7 @@ export default {
               description: "มีข้อมูลผู้ใช้งานอยู่ในระบบ",
               duration: 3,
             });
-          }
-          else if (value == "") {
+          } else if (value == "") {
             self.$notification["warning"]({
               message: "ชื่อผู้ใช้งาน ไม่ได้กรอกข้อมูล",
               description: "กรุณากรอกชื่อผู้ใช้งาน",
@@ -974,7 +911,7 @@ export default {
           } else if (!self.checkSpecificKey(value)) {
             self.$notification["warning"]({
               message: "การแจ้งเตือน",
-              description: "อักษรพิเศษและช่องว่างไม่สามารถกรอกได้",
+              description: "ช่องว่างไม่สามารถกรอกได้",
               duration: 3,
             });
           } else {
@@ -1045,10 +982,12 @@ export default {
 
       if (this.person.district_id == undefined) {
         this.districtVeri = "ไม่ได้ระบุ";
-        this.zipcodeVeri = "ไม่ได้ระบุ";
       } else {
         this.getDistrictId();
       }
+
+      this.zipcodeVeri =
+        this.person.zipcode == "" ? "ไม่ได้ระบุ" : this.person.zipcode;
     },
     prev() {
       this.current--;
@@ -1094,11 +1033,11 @@ export default {
     },
     addPositionAccess() {
       this.person.position_access.push({
-        key: this.indexpostion + 1,
+        key: this.indexposition + 1,
         position_access_id: undefined,
         sub_access: [],
       });
-      this.indexpostion++;
+      this.indexposition++;
     },
     removePositionAccess(id) {
       this.person.position_access.splice(
@@ -1152,7 +1091,7 @@ export default {
         .then(function(res) {
           const data = res.data;
           self.districtVeri = data.results[0].name_th;
-          self.zipcodeVeri = data.results[0].zip_code;
+          self.person.zipcode = data.results[0].zip_code;
         });
     },
     getPrefixId() {
@@ -1180,11 +1119,11 @@ export default {
       const self = this;
       axios
         .post("http://localhost:8080/personRouters/getPositionId", {
-          postion_id: self.person.position_id,
+          position_id: self.person.position_id,
         })
         .then(function(res) {
           const data = res.data;
-          self.positionVeri = data.results[0].postition_name;
+          self.positionVeri = data.results[0].position_name;
         });
     },
   },
@@ -1201,6 +1140,11 @@ export default {
   .form-addUser {
     border: 1px solid;
     border-radius: 5px;
+  }
+}
+.modal-th-bold {
+  .ant-table-row {
+    font-weight: 900;
   }
 }
 </style>

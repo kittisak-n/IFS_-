@@ -84,7 +84,7 @@ export default {
       if (!this.checkSpecificKey()) {
         this.$notification["warning"]({
           message: "การแจ้งเตือน",
-          description: "อักษรพิเศษและช่องว่างไม่สามารถกรอกได้",
+          description: "ช่องว่างไม่สามารถกรอกได้",
           duration: 3,
         });
       } else if (this.username == "") {
@@ -152,12 +152,12 @@ export default {
       }
     },
     checkSpecificKey() {
-      var specialKey =
-        "[`~!#$^&*()=|{}':;',\\[\\].<>/?~！#￥……&*（）——|{}【】‘；：”“'。，、？]‘'";
+      // var specialKey =
+      //   "[`~!#$^&*()=|{}':;',\\[\\].<>/?~！#￥……&*（）——|{}【】‘；：”“'。，、？]‘'";
       for (var i = 0; i < this.username.length; i++) {
-        if (specialKey.indexOf(this.username.substr(i, 1)) != -1) {
-          return false;
-        }
+        // if (specialKey.indexOf(this.username.substr(i, 1)) != -1) {
+        //   return false;
+        // }
         if (this.username[i] == " ") {
           return false;
         }
