@@ -17,7 +17,7 @@
               <br />
               <div class="text-head">จำนวนบุคลากรที่มีอยู่ในระบบ</div>
               <div>
-                <span class="text-number ">{{ numPerson }} </span>คน
+                <span class="text-number ">{{ numPerson }} คน</span>
               </div>
             </a-col>
           </a-row>
@@ -51,7 +51,7 @@
             <a-col :span="4" :style="{ textAlign: 'start' }">
               <router-link :to="{ path: '/permission_manage/adduser' }">
                 <a-button type="success" icon="user-add" style="width:100%">
-                  เพิ่มผู้มีสิทธิ์เข้าใช้ระบบ
+                  เพิ่มผู้ใช้งานเข้าใช้ระบบ
                 </a-button>
               </router-link>
             </a-col>
@@ -116,7 +116,7 @@
                     <a-tooltip placement="top" title="จัดการสิทธิ์">
                       <a-button
                         type="warning"
-                        @click="getPostionAccessById(record.person_id)"
+                        @click="getPositionAccessById(record.person_id)"
                         icon="edit"
                       >
                       </a-button>
@@ -198,18 +198,7 @@
           :pagination="false"
           bordered
         >
-          <!-- <span slot="expandedRowRender" slot-scope="record" style="margin: 0">
-            <div v-for="(item, index) in record.sub_system" :key="index">
-              <p v-if="item.sub_system_name_TH == null">
-                ไม่มีระบบย่อย
-              </p>
-              <p v-else>
-                {{ item.sub_system_name_TH }}
-              </p>
-            </div>
-            
-          </span> -->
-          <span slot="postion_access_name_TH" slot-scope="text, record, index">
+          <span slot="position_access_name_TH" slot-scope="text, record, index">
             <div
               v-if="index != personPositionAccess.length - 1"
               style="text-align:center"
@@ -222,20 +211,20 @@
             >
               <a-select
                 style="width:100%"
-                v-model="personPositionAccess[index].postion_access_id"
+                v-model="personPositionAccess[index].position_access_id"
                 placeholder="โปรดเลือกสิทธิ์เข้าถึง"
               >
                 <a-select-option
-                  v-for="item in dataPostionAccess"
+                  v-for="item in dataPositionAccess"
                   :key="item.key"
-                  :value="item.postion_access_id"
+                  :value="item.position_access_id"
                   :disabled="
                     personPositionAccess.find(
-                      (ele) => ele.postion_access_id == item.postion_access_id
+                      (ele) => ele.position_access_id == item.position_access_id
                     )
                   "
                 >
-                  {{ item.postion_access_name_TH }}
+                  {{ item.position_access_name_TH }}
                 </a-select-option>
               </a-select>
             </div>
@@ -245,7 +234,7 @@
               v-if="index != personPositionAccess.length - 1"
               style="text-align:center"
             >
-              <a-switch
+              <!-- <a-switch
                 :checked="personPositionAccess[index].prepair_status"
                 @click="
                   () =>
@@ -258,7 +247,7 @@
               >
                 <a-icon slot="checkedChildren" type="check" />
                 <a-icon slot="unCheckedChildren" type="close" />
-              </a-switch>
+              </a-switch> -->
             </div>
             <div
               v-if="index == personPositionAccess.length - 1"
@@ -268,31 +257,12 @@
                 type="success"
                 icon="save"
                 @click="
-                  updatePermission(record.postion_access_id, record.person_id)
+                  updatePermission(record.position_access_id, record.person_id)
                 "
               ></a-button>
             </div>
           </span>
-
-          <!-- <template slot="title" >
-            Header
-          </template> -->
-          <!-- <template slot="footer" :footer="null">
-            Footer
-          </template> -->
         </a-table>
-
-        <!-- <template slot="footer">
-          <a-select
-            default-value="lucy"
-            style="width: 120px"
-            @change="handleChange"
-          >
-            <a-select-option value="jack">
-              Jack
-            </a-select-option>
-          </a-select>
-        </template> -->
       </a-modal>
 
       <a-modal
@@ -307,13 +277,13 @@
               <a-row :gutter="[8, 8]">
                 <a-col :span="12" v-model="nameInfo">
                   <div style="text-align:center">
-                    <b>ชื่อ : </b>
+                    <b>ชื่อ: </b>
                     <span>{{ nameInfo }}</span>
                   </div>
                 </a-col>
                 <a-col :span="12" v-model="lastnameInfo">
                   <div style="text-align:center">
-                    <b>นามสกุล : </b>
+                    <b>นามสกุล: </b>
                     <span>{{ lastnameInfo }}</span>
                   </div>
                 </a-col>
@@ -322,13 +292,13 @@
               <a-row :gutter="[8, 8]">
                 <a-col :span="12" v-model="positionInfo">
                   <div style="text-align:center">
-                    <b>ตำแหน่ง : </b>
+                    <b>ตำแหน่ง: </b>
                     <span>{{ positionInfo }}</span>
                   </div>
                 </a-col>
                 <a-col :span="12" v-model="addressInfo">
                   <div style="text-align:center">
-                    <b>ที่อยู่ : </b>
+                    <b>ที่อยู่: </b>
                     <span>{{ addressInfo }}</span>
                   </div>
                 </a-col>
@@ -337,13 +307,13 @@
               <a-row :gutter="[8, 8]">
                 <a-col :span="12" v-model="districtInfo">
                   <div style="text-align:center">
-                    <b>ตำบล : </b>
+                    <b>ตำบล: </b>
                     <span>{{ districtInfo }}</span>
                   </div>
                 </a-col>
                 <a-col :span="12" v-model="amphurInfo">
                   <div style="text-align:center">
-                    <b>อำเภอ : </b>
+                    <b>อำเภอ: </b>
                     <span>{{ amphurInfo }}</span>
                   </div>
                 </a-col>
@@ -352,13 +322,13 @@
               <a-row :gutter="[8, 8]">
                 <a-col :span="12" v-model="provinceInfo">
                   <div style="text-align:center">
-                    <b>จังหวัด : </b>
+                    <b>จังหวัด: </b>
                     <span>{{ provinceInfo }}</span>
                   </div>
                 </a-col>
                 <a-col :span="12" v-model="zipcodeInfo">
                   <div style="text-align:center">
-                    <b>รหัสไปรษณีย์ : </b>
+                    <b>รหัสไปรษณีย์: </b>
                     <span>{{ zipcodeInfo }}</span>
                   </div>
                 </a-col>
@@ -381,10 +351,11 @@
                   />
                 </a-col>
                 <a-col :span="20" style="text-align:end">
-                  <div class="text-head">จำนวนระบบ</div>
+                  <div class="text-head">จำนวนเมนูที่เข้าถึง</div>
                   <div>
-                    <span class="text-number ">{{ numSystemPermission }} </span
-                    >ระบบ
+                    <span class="text-number "
+                      >{{ numSystemPermission }} ระบบ</span
+                    >
                   </div>
                 </a-col>
               </a-row>
@@ -425,6 +396,27 @@
                 </div>
               </span>
             </a-table>
+
+            <!-- <a-table
+              :columns="columns_modal_info"
+              :data-source="personSystem"
+              size="small"
+              :pagination="false"
+              bordered
+            >
+              <span
+                slot="expandedRowRender"
+                slot-scope="record"
+                style="margin: 0"
+              >
+                <div v-for="(item, index) in record.sub_system" :key="index">
+                  <p v-if="item.sub_system_name_TH == null">
+                    ไม่มีระบบย่อย
+                  </p>
+                  <p v-else>- {{ item.sub_system_name_TH }}</p>
+                </div>
+              </span>
+            </a-table> -->
           </a-col>
         </a-row>
       </a-modal>
@@ -455,21 +447,6 @@ const columns = [
     key: "age",
     scopedSlots: { customRender: "position" },
   },
-  // {
-  //   title: "สิทธิ์การเข้าถึง",
-  //   dataIndex: "permission",
-  //   width: "20%",
-  //   key: "",
-  //   scopedSlots: { customRender: "permission" },
-  // },
-
-  // {
-  //   title: "ไว้ก่อน",
-  //   dataIndex: "address",
-  //   width: "20%",
-  //   key: "address",
-  //   scopedSlots: { customRender: "test" },
-  // },
   {
     title: "สถานะ",
     key: "status",
@@ -488,9 +465,9 @@ const columns = [
 const columns_modal_manage = [
   {
     title: "สิทธิ์การใช้งาน",
-    dataIndex: "postion_access_name_TH",
-    key: "postion_access_name_TH",
-    scopedSlots: { customRender: "postion_access_name_TH" },
+    dataIndex: "position_access_name_TH",
+    key: "position_access_name_TH",
+    scopedSlots: { customRender: "position_access_name_TH" },
   },
   {
     title: "จัดการ",
@@ -505,40 +482,6 @@ const columns_modal_info = [
     dataIndex: "system_name_TH",
   },
 ];
-
-// const data = [
-//   {
-//     key: "1",
-//     name: "ประไพพรรณ สุ่มทรัพย์",
-//     position: "เจ้าหน้าที่ฝ่ายธุรการ",
-//     address: "New York No. 1 Lake Park",
-//     tags: ["nice", "developer"],
-//   },
-//   {
-//     key: "2",
-//     name: "นันทิกานต์ คุ้มเพชร",
-//     position: "เจ้าหน้าที่เบิกวัสดุ",
-//     address: "London No. 1 Lake Park",
-//     tags: ["loser"],
-//   },
-//   {
-//     key: "3",
-//     name: "ปุณณานันท์ มีเงินมาก",
-//     position: "อาจารย์ที่ปรึกษา",
-//     address: "Sidney No. 1 Lake Park",
-//     tags: ["cool", "teacher"],
-//   },
-// ];
-
-// const dataPerson = [
-//   {
-//     key: dataPerson.results.person_id,
-//     name: dataPerson.person_firstname_TH + " " + dataPerson.person_lastname_TH,
-//     position: "เจ้าหน้าที่ฝ่ายธุรการ",
-//     address: "New York No. 1 Lake Park",
-//     tags: ["nice", "developer"],
-//   },
-// ];
 
 const data_modal_info = [
   {
@@ -557,7 +500,7 @@ export default {
       dataPerson: [],
       personSystem: [],
       personPositionAccess: [],
-      dataPostionAccess: [],
+      dataPositionAccess: [],
       // dataPersonId: {
       //   person_id: "",
       //   person_username: "",
@@ -614,7 +557,7 @@ export default {
                     ele.person_firstname_TH +
                     " " +
                     ele.person_lastname_TH,
-              position: ele.postition_name,
+              position: ele.position_name,
               // permission: ele.person_status,
               status: ele.person_status == 1 ? true : false,
             };
@@ -644,7 +587,7 @@ export default {
           self.nameInfo =
             data.results[0].pf_name_abbr + data.results[0].person_firstname_TH;
           self.lastnameInfo = data.results[0].person_lastname_TH;
-          self.positionInfo = data.results[0].postition_name;
+          self.positionInfo = data.results[0].position_name;
           self.addressInfo = data.results[0].person_address;
           self.provinceInfo = data.results[0].province;
           self.amphurInfo = data.results[0].amphures;
@@ -658,9 +601,10 @@ export default {
         })
         .then(function(res) {
           const data = res.data;
-
           data.results.forEach(function(ele, index) {
-            self.numSystemPermission += 1;
+            if (ele.system_name_TH != null) {
+              self.numSystemPermission += 1;
+            }
             let data = {
               key: index + 1,
               system_name_TH: ele.system_name_TH,
@@ -729,12 +673,12 @@ export default {
         });
     },
 
-    getPostionAccessById(index) {
+    getPositionAccessById(index) {
       this.visible_manage = true;
       const self = this;
       self.personPositionAccess = [];
       axios
-        .post("http://localhost:8080/personRouters/getPostionAccessById", {
+        .post("http://localhost:8080/personRouters/getPositionAccessById", {
           person_id: index,
         })
         .then(function(res) {
@@ -743,8 +687,8 @@ export default {
           data.results.forEach(function(ele, index) {
             self.personPositionAccess.push({
               key: index + 1,
-              postion_access_id: ele.postion_access_id,
-              postion_access_name_TH: ele.postion_access_name_TH,
+              position_access_id: ele.position_access_id,
+              position_access_name_TH: ele.position_access_name_TH,
               person_id: ele.person_id,
               prepair_status: ele.prepair_status == 1 ? true : false,
             });
@@ -752,14 +696,14 @@ export default {
           });
           self.personPositionAccess.push({
             key: self.position_access_index,
-            postion_access_id: undefined,
-            postion_access_name_TH: undefined,
+            position_access_id: undefined,
+            position_access_name_TH: undefined,
             person_id: index,
             prepair_status: undefined,
           });
           self.position_access_index++;
         });
-      // self.getPositionDetail(self.personPositionAccess.postion_access_id);
+      // self.getPositionDetail(self.personPositionAccess.position_access_id);
     },
 
     getPositionDetail(index) {
@@ -780,10 +724,10 @@ export default {
         });
     },
 
-    getPostionAccess() {
+    getAllPositionAccess() {
       const self = this;
       axios
-        .post("http://localhost:8080/personRouters/getPostionAccess")
+        .post("http://localhost:8080/personRouters/getAllPositionAccess")
         .then(function(res) {
           console.log(res.data);
           const data = res.data;
@@ -791,56 +735,14 @@ export default {
           data.results.forEach(function(ele, index) {
             let data = {
               key: index + 1,
-              postion_access_id: ele.postion_access_id,
-              postion_access_name_TH: ele.postion_access_name_TH,
+              position_access_id: ele.position_access_id,
+              position_access_name_TH: ele.position_access_name_TH,
             };
-            self.dataPostionAccess.push(data);
+            self.dataPositionAccess.push(data);
           });
         });
     },
 
-    // showDeleteConfirm(id, name) {
-    //   console.log(id);
-
-    //   this.$confirm({
-    //     title: "คุณการต้องลบใช่หรือไม่",
-    //     content: name,
-    //     okText: "ยืนยัน",
-    //     okType: "danger",
-    //     cancelText: "ยกเลิก",
-    //     onOk() {
-    //       console.log("OK");
-
-    //       axios
-    //         .post("http://localhost:8080/personRouters/deletePrepair", {
-    //           person_id: id,
-    //         })
-    //         .then(function(res) {
-    //           const data = res.data;
-    //           console.log(data.results);
-    //         });
-
-    //       axios
-    //         .post("http://localhost:8080/personRouters/deletePerson", {
-    //           person_id: id,
-    //         })
-    //         .then(function(res) {
-    //           const data = res.data;
-    //           console.log(data.results);
-    //           this.getAllPerson();
-    //         });
-
-    //       this.$notification["success"]({
-    //         message: "การแจ้งเตือน",
-    //         description: "ลบสำเร็จ",
-    //         duration: 3,
-    //       });
-    //     },
-    //     onCancel() {
-    //       console.log("Cancel");
-    //     },
-    //   });
-    // },
     handleOk(e) {
       console.log(e);
       this.visible_manage = false;
@@ -852,7 +754,7 @@ export default {
   },
   created() {
     this.getAllPerson();
-    this.getPostionAccess();
+    this.getAllPositionAccess();
     // console.log(this.$store.state.user.user_name);
     // console.log(this.$store.state.user.user_id);
     // console.log(this.$store.state.user_menu);

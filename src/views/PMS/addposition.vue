@@ -5,7 +5,7 @@
         <a-card>
           <a-row :gutter="[8, 8]" type="flex">
             <a-col :span="4" style="text-align:end">
-              ชื่อสิทธิ์การเข้าถึง :
+              <b>ชื่อสิทธิ์การเข้าถึง:</b>
             </a-col>
             <a-col :span="16">
               <a-input
@@ -24,7 +24,7 @@
             :key="ele.system_id"
           >
             <a-col :span="4" style="text-align:end">
-              ระบบหลัก :
+              <b>เมนูหลัก:</b>
             </a-col>
             <a-col :span="15">
               <a-row type="flex">
@@ -34,14 +34,19 @@
                   @change="add_subsystem(index)"
                 >
                   <a-select-option :value="null" disabled>
-                    โปรดเลือกระบบ
+                    โปรดเลือกเมนูหลัก
                   </a-select-option>
                   <a-select-option
                     v-for="item in System"
                     :key="item.key"
                     :value="item.system_id"
+                    :disabled="
+                      select_system.find(
+                        (ele) => ele.system_id === item.system_id
+                      )
+                    "
                   >
-                    {{ item.system_name }}
+                    {{ item.system_name }} <br />
                   </a-select-option>
                 </a-select>
               </a-row>
@@ -49,7 +54,6 @@
               <a-row v-if="select_system[index].system_id != null">
                 <a-col :span="24">
                   <a-checkbox
-                    style="width:100%"
                     v-for="(ele_sub, index_sub) in select_system[index]
                       .sub_system"
                     :key="ele_sub.key"
@@ -75,60 +79,6 @@
               />
             </a-col>
           </a-row>
-          <!-- <div v-if="this.system == 1">
-            <a-row
-              :gutter="[8, 8]"
-              type="flex"
-              justify="center"
-              v-for="item in IF_System"
-              :key="item.id"
-            >
-              <a-col :span="6">
-                <a-checkbox v-if="item.status == 1">
-                  {{ item.name }}
-                </a-checkbox>
-              </a-col>
-            </a-row>
-          </div>
-
-          <div v-if="this.system == 2">
-            <a-row
-              :gutter="[8, 8]"
-              type="flex"
-              justify="center"
-              v-for="item in IF_System"
-              :key="item.id"
-            >
-              <a-col :span="6">
-                <a-checkbox v-if="item.status == 2">
-                  {{ item.name }}
-                </a-checkbox>
-              </a-col>
-            </a-row>
-          </div> -->
-
-          <!-- <a-row
-            :gutter="[8, 8]"
-            v-if="this.system == 2"
-            type="flex"
-            justify="center"
-          >
-            <a-col :span="10" v-for="item in IF_System" :key="item.id">
-              <a-checkbox v-if="item.status == 1">
-                {{ item.name }}
-              </a-checkbox>
-            </a-col>
-          </a-row> -->
-
-          <!-- <div v-if="this.system == 2">
-            <a-row :gutter="[8, 8]" v-for="item in IF_System" :key="item.id">
-              <a-col :span="24">
-                <a-checkbox v-if="item.status == 2">
-                  {{ item.name }}
-                </a-checkbox>
-              </a-col>
-            </a-row>
-          </div> -->
 
           <a-row :gutter="[8, 8]">
             <a-col :span="24" style="text-align:center">
@@ -173,9 +123,6 @@ export default {
     };
   },
   methods: {
-    // show_system() {
-    //   console.log(this.system);
-    // },
     checkSpecificKey(data) {
       var specialKey =
         "[`~!#$^&*()=|{}':;',\\[\\].<>/?~！#￥……&*（）——|{}【】‘；：”“'。，、？]‘'";

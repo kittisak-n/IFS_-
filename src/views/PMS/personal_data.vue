@@ -4,7 +4,7 @@
       <br />
       <a-row :gutter="[8, 8]" type="flex">
         <a-col :span="6" style="text-align:end">
-          ชื่อ-นามสกุล (ภาษาไทย) :
+          <b>ชื่อ-นามสกุล:</b>
         </a-col>
         <a-col :span="4">
           <a-select
@@ -25,14 +25,14 @@
         <a-col :span="6">
           <a-input
             style="width:100%"
-            v-model="person.nameThai"
+            v-model="person.person_firstname_TH"
             placeholder="กรอกชื่อจริงผู้ใช้งาน"
           />
         </a-col>
         <a-col :span="6">
           <a-input
             style="width:100%"
-            v-model="person.lastnameThai"
+            v-model="person.person_lastname_TH"
             placeholder="กรอกนามสกุลผู้ใช้งาน"
           />
         </a-col>
@@ -40,14 +40,17 @@
       <br />
       <a-row :gutter="[8, 8]" type="flex" justify="center">
         <a-col :span="2" style="text-align:end">
-          ตำแหน่ง :
+          <b>ตำแหน่ง:</b>
         </a-col>
 
         <a-col :span="6">
           <a-select
+            show-search
             style="width:100%"
             v-model="person.position_id"
             placeholder="โปรดเลือกตำแหน่ง"
+            :filter-option="filterOptionPosition"
+            @change="getAllPosition()"
           >
             <!-- <a-select-option :value="null" v-if="(value = null)">
               ตำแหน่ง
@@ -55,21 +58,20 @@
             <a-select-option
               v-for="item in dataPosition"
               :key="item.key"
-              :value="item.postion_id"
+              :value="item.position_id"
             >
-              {{ item.postition_name }}
+              {{ item.position_name }}
             </a-select-option>
-
           </a-select>
         </a-col>
 
         <a-col :span="2" style="text-align:end">
-          ที่อยู่ :
+          <b>ที่อยู่:</b>
         </a-col>
         <a-col :span="6">
           <a-input
             style="width:100%"
-            v-model="person.address"
+            v-model="person.person_address"
             placeholder="กรอกที่อยู่บ้านเลขที่"
           />
         </a-col>
@@ -77,7 +79,7 @@
       <br />
       <a-row :gutter="[8, 8]" type="flex" justify="center">
         <a-col :span="2" style="text-align:end">
-          จังหวัด :
+          <b> จังหวัด:</b>
         </a-col>
         <a-col :span="4">
           <a-select
@@ -99,7 +101,7 @@
           </a-select>
         </a-col>
         <a-col :span="2" style="text-align:end">
-          อำเภอ :
+          <b> อำเภอ:</b>
         </a-col>
         <a-col :span="4">
           <a-select
@@ -121,7 +123,7 @@
           </a-select>
         </a-col>
         <a-col :span="2" style="text-align:end">
-          ตำบล :
+          <b> ตำบล:</b>
         </a-col>
         <a-col :span="4">
           <a-select
@@ -131,7 +133,7 @@
             style="width: 100%"
             v-model="person.district_id"
             :filter-option="filterOptionDistrict"
-            @change="getAllDistrict()"
+            @change="getzipCode()"
           >
             <a-select-option
               v-for="item in dataDistricts"
@@ -143,10 +145,17 @@
           </a-select>
         </a-col>
         <a-col :span="2" style="text-align:end">
-          รหัสไปรษณีย์ :
+          <b>รหัสไปรษณีย์:</b>
         </a-col>
+
         <a-col :span="4">
-          <a-select style="width:100%" v-model="person.district_id" disabled>
+          <a-input
+            style="width:100%"
+            placeholder="กรอกรหัสไปรษณีย์"
+            v-model="person.person_zipcode"
+          />
+
+          <!-- <a-select style="width:100%" v-model="person.district_id" disabled>
             <a-select-option :value="null">
               โปรดเลือก
             </a-select-option>
@@ -157,7 +166,7 @@
             >
               {{ item.zip_code }}
             </a-select-option>
-          </a-select>
+          </a-select> -->
         </a-col>
       </a-row>
       <br />
@@ -254,6 +263,7 @@ export default {
         position_id: undefined,
         person_update_by: this.$store.state.user.user_id,
         person_id: this.$store.state.user.user_id,
+        person_zipcode: "",
       },
       dataPrefix: [],
       dataAmphures: [],
@@ -261,8 +271,6 @@ export default {
       dataProvinces: [],
       dataPosition: [],
       dataPositionAccess: [],
-      nameEngVeri: "",
-      nameThaiVeri: "",
 
       edit_unit_modal: false, // modal edit unit
       edit_unit: 0,
@@ -336,13 +344,14 @@ export default {
           console.log(data);
 
           self.person.prefix_id = data.results[0].prefix_id;
-          self.person.nameThai = data.results[0].person_firstname_TH;
-          self.person.lastnameThai = data.results[0].person_lastname_TH;
+          self.person.person_firstname_TH = data.results[0].person_firstname_TH;
+          self.person.person_lastname_TH = data.results[0].person_lastname_TH;
           self.person.position_id = data.results[0].person_position;
-          self.person.address = data.results[0].person_address;
+          self.person.person_address = data.results[0].person_address;
           self.person.province_id = data.results[0].person_province;
           self.person.amphure_id = data.results[0].person_amphur;
           self.person.district_id = data.results[0].person_district;
+          self.person.person_zipcode = data.results[0].zipcode;
           self.getAllProvice();
           self.getAllAmphur();
           self.getAllDistrict();
@@ -449,6 +458,16 @@ export default {
           console.log(self.dataDistricts);
         });
     },
+    getzipCode() {
+      const self = this;
+      self.person.person_zipcode =
+        self.dataDistricts[
+          self.dataDistricts.findIndex(
+            (ele) => ele.value == self.person.district_id
+          )
+        ].zip_code;
+    },
+
     getAllPosition() {
       const self = this;
       axios
@@ -460,8 +479,8 @@ export default {
           data.results.forEach(function(ele, index) {
             self.dataPosition.push({
               key: index + 1,
-              postion_id: ele.postion_id,
-              postition_name: ele.postition_name,
+              position_id: ele.position_id,
+              position_name: ele.position_name,
             });
           });
         });
@@ -477,12 +496,19 @@ export default {
           data.results.forEach(function(ele, index) {
             self.dataPositionAccess.push({
               key: index + 1,
-              postion_access_id: ele.postion_access_id,
-              postion_access_name_TH: ele.postion_access_name_TH,
+              position_access_id: ele.position_access_id,
+              position_access_name_TH: ele.position_access_name_TH,
             });
           });
           console.log(self.dataPositionAccess);
         });
+    },
+    filterOptionPosition(input, option) {
+      return (
+        option.componentOptions.children[0].text
+          .toLowerCase()
+          .indexOf(input.toLowerCase()) >= 0
+      );
     },
     filterOptionProvince(input, option) {
       return (
