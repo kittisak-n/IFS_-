@@ -34,7 +34,7 @@
           >
             <router-link :to="{ path: '/' + system.Path }">
               <a-icon :type="system.icon" />
-               ๆ ๆๆ
+
               <span>{{ system.Name }}</span>
             </router-link>
           </a-menu-item>
@@ -64,7 +64,7 @@
         </a-menu>
       </a-layout-sider>
       <a-layout>
-        <a-affix :offset-top="0.01" style="width:auto">
+        <a-affix :offset-top="0.01" style="width: auto">
           <a-layout-header
             :style="{
               backgroundColor: '#e8e8e8',
@@ -243,24 +243,24 @@ export default {
         );
       } else {
         self.$store.state.status_login = false;
-        self.$router.push({ path: "login" });
+        self.$router.replace({ path: "/login" });
       }
     },
     Userlogout() {
       const self = this;
       sessionStorage.clear();
       self.$store.state.status_login = false;
-      self.$router.push({ path: "login" });
+      self.$router.replace({ path: "/login" });
     },
     clearSession() {
-      window.onbeforeunload = function() {
+      window.onbeforeunload = function () {
         const storage = window.localStorage;
         storage.clear();
       };
     },
   },
   computed: {
-    crumbs: function() {
+    crumbs: function () {
       let pathArray = this.$route.path.split("/");
       pathArray.shift();
       let breadcrumbs = pathArray.reduce((breadcrumbArray, path, idx) => {
@@ -634,5 +634,29 @@ hr {
 .ant-menu-item .anticon,
 .ant-menu-submenu-title .anticon {
   margin-right: 8px !important;
+}
+
+.ant-table-small {
+  .ant-table-content {
+    .ant-table-body {
+      margin: 0px !important;
+      table {
+        thead {
+          background-color: #0f3057;
+          th {
+            color: #ffffff !important;
+            font-weight: 600;
+          }
+        }
+        tbody {
+          .ant-table-row:hover {
+            color: #0f3057 !important;
+            font-weight: 600;
+            font-size: 15px;
+          }
+        }
+      }
+    }
+  }
 }
 </style>

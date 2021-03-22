@@ -1267,7 +1267,7 @@ export default {
           },
         },
       ],
-      test: null,
+
       // ตัวแปรที่ใช้ในการกำหนดอัตราการจ่ายค่าตอบแทน
       schedule_name: null,
       schedule_start_date: null,
@@ -1359,55 +1359,54 @@ export default {
   methods: {
     //ตรวจสอบการกรอกข้อมูล
     validate_add() {
+      const self = this;
+
+      let check_ymd = true;
+      let check = true;
       //false กรุณากรอก ข้อมูลว่าง
-      let check = null;
-       const today = new Date();
+
+      const today = new Date();
+
       const year = today.getFullYear();
+
       const Month = today.getMonth() + 1;
+
       const Day = today.getDate();
-      const schedule_start_date_DATA = this.schedule_start_date.split("-");
 
-    let check_ymd  = null;
-      
-        if(parseInt(schedule_start_date_DATA[0]) < year )
-        {
-           console.log(  "ปี พ.ศ. น้อยกว่าปัจจุบัน");
+      console.log(this.schedule_start_date.split("-"));
+      let schedule_start_date_DATA = self.schedule_start_date.split("-");
+      console.log(schedule_start_date_DATA);
 
-           this.$message.error(
-        "ปี พ.ศ. น้อยกว่าปัจจุบัน"
-      );
-                 check_ymd = false
-        }
-        else if (parseInt(schedule_start_date_DATA[1]) < Month ){
-            console.log(  "เดือน น้อยกว่าปัจจุบัน");
-             this.$message.error(
-        "เดือน น้อยกว่าปัจจุบัน"
-      );
-                 check_ymd = false
-        }else if(parseInt(schedule_start_date_DATA[2]) < Day){ 
-          console.log(  "วัน น้อยกว่าปัจจุบัน");
-           this.$message.error(
-        "วัน น้อยกว่าปัจจุบัน"
-      );
-      check_ymd = false
-          }
-          else{
-            check_ymd = true
-          }
-          
-      if (this.current == 0) {
+      if (parseInt(schedule_start_date_DATA[0]) < year) {
+        console.log("ปี พ.ศ. น้อยกว่าปัจจุบัน");
+
+        self.$message.error("ปี พ.ศ. น้อยกว่าปัจจุบัน");
+        check_ymd = false;
+      } else if (parseInt(schedule_start_date_DATA[1]) < Month) {
+        console.log("เดือน น้อยกว่าปัจจุบัน");
+        self.$message.error("เดือน น้อยกว่าปัจจุบัน");
+        check_ymd = false;
+      } else if (parseInt(schedule_start_date_DATA[2]) < Day) {
+        console.log("วัน น้อยกว่าปัจจุบัน");
+        self.$message.error("วัน น้อยกว่าปัจจุบัน");
+        check_ymd = false;
+      } else {
+        check_ymd = true;
+      }
+      console.log()
+      if (self.current == 0) {
         if (
-          this.schedule_name == null ||
-          this.schedule_name == "" ||
-          this.schedule_start_date == null ||
-          this.schedule_start_date == "" ||
-          check_ymd == true ||
-          this.schedule_per_credit == null ||
-          this.schedule_per_credit == "" ||
-          this.schedule_general_min == null ||
-          this.schedule_general_min == "" ||
-          this.schedule_general_max == null ||
-          this.schedule_general_max == ""
+          self.schedule_name == null ||
+          self.schedule_name == "" ||
+          self.schedule_start_date == null ||
+          self.schedule_start_date == "" ||
+          !check_ymd ||
+          self.schedule_per_credit == null ||
+          self.schedule_per_credit == "" ||
+          self.schedule_general_min == null ||
+          self.schedule_general_min == "" ||
+          self.schedule_general_max == null ||
+          self.schedule_general_max == ""
         ) {
           console.log("กรุณากรอกข้อความ");
           check = false;
@@ -1415,7 +1414,7 @@ export default {
           check = true;
           console.log("กรอกข้อมูลครบแล้ว");
         }
-      } else if (this.current == 1) {
+      } else if (self.current == 1) {
         // เช็ควิชาใน บรรยาย
         for (
           let i = 0;
@@ -1533,7 +1532,6 @@ export default {
           }
         }
       }
-
       return check;
     },
     // บันทึก ตั้งค่าอัตราการจ่ายค่าตอบแทนภาระงานสอน
@@ -1821,18 +1819,9 @@ export default {
     onChangedate(date, dateString) {
       console.log(date, dateString);
 
-
-
       this.schedule_start_date = dateString;
-
-     
-     
-
-
     },
-    handleSearch(value) {
-      fetch(value, (data) => (this.data = data));
-    },
+
     handleChange(value) {
       console.log(value);
       this.value = value;
