@@ -32,11 +32,13 @@
               :xl="24"
               :style="{ textAlign: 'right' }"
             >
+            <!-- <div v-if="positionAccessId[0].position_access_id == 17 || positionAccessId[0].position_access_id == 1">
               <router-link :to="{ path: '/Calculation_criteria/Add_criteria' }">
                 <a-button type="primary" icon="setting">
                   ตั้งค่าอัตราการจ่ายค่าตอบแทนภาระงานสอน
                 </a-button>
               </router-link>
+            </div> -->
             </a-col>
           </a-row>
           <hr style="width: 100%" />
@@ -163,12 +165,41 @@ export default {
       ],
      
       schedule_of_data: [],
+      positionAccessId:[],
     };
   },
 
   methods: {
    
+    getByIdPerson(){
+      const self = this;
+   
+      axios.post(this.$store.state.url + "/personRouters/getPositionAccessById",{
+          person_id: self.$store.state.user.user_id,
+        })
+      .then(res => {
+  
+
+       
     
+              let data = {
+            
+              person_id: res.data.results[0].person_id,
+              position_access_id:  res.data.results[0].position_access_id,
+              position_access_name_TH:  res.data.results[0].position_access_name_TH,
+              prepair_status:  res.data.results[0].prepair_status
+            
+            };   
+              self.positionAccessId.push(data);
+
+    
+      })
+      .catch(err => {
+        console.error(err); 
+      })
+
+          console.log( self.positionAccessId);
+    },
     go_to_detail(index) {
       console.log(index);
       this.$store.state.schedule = index;
@@ -207,7 +238,9 @@ export default {
     },
   },
   created() {
+        this.getByIdPerson();
     this.get_all_schedule();
+
   },
 };
 </script>

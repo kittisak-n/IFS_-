@@ -44,6 +44,7 @@
               <span style="font-size: 18px"> ภาคเรียนที่ </span>
 
               <a-select
+               @change="get_summary_by_year()"
                 v-model="semester"
                 style="width: 100px; font-size: 15px"
               >
@@ -284,12 +285,11 @@ export default {
       get_summary_by_year() {
       const self = this;
 
-      if (this.year == 0) {
-        this.get_summary();
-      } else {
         axios
           .post(this.$store.state.url + "/summaryRouters/get_summary_by_year", {
             summary_year: self.year,
+            summary_term: self.semester,
+
           })
           .then((res) => {
             self.summary_data = [];
@@ -307,6 +307,8 @@ export default {
                 summary_create_by: element.summary_create_by,
                 summary_create_date: element.summary_create_date,
 
+
+                 semester: element.summary_term,
                 schedule_per_credit: element.schedule_per_credit,
                 schedule_start_date: element.schedule_start_date,
                 schedule_name: element.schedule_name,
@@ -317,6 +319,7 @@ export default {
                 person_address: element.person_address,
                 provinces_name: element.provinces_name,
                 amphures_name: element.amphures_name,
+                   person_zipcode:element.person_zipcode,
                 districts_name: element.districts_name,
                 zip_code: element.zip_code,
               });
@@ -328,7 +331,7 @@ export default {
           .catch((err) => {
             console.error(err);
           });
-      }
+      
     },
     genDate() {
       const self = this;
@@ -389,6 +392,7 @@ export default {
               provinces_name: element.provinces_name,
               amphures_name: element.amphures_name,
               districts_name: element.districts_name,
+              person_zipcode:element.person_zipcode,
               zip_code: element.zip_code,
             });
           });
@@ -1800,7 +1804,7 @@ export default {
                       " จังหวัด " +
                       self.export_data.provinces_name +
                       " " +
-                      self.export_data.zip_code,
+                      self.export_data.person_zipcode,
                     colSpan: 3,
                     alignment: "left",
                   },
@@ -1990,7 +1994,7 @@ export default {
                       " จังหวัด " +
                       self.export_data.provinces_name +
                       " " +
-                      self.export_data.zip_code,
+                      self.export_data.person_zipcode,
 
                     colSpan: 3,
                     alignment: "left",
@@ -2182,7 +2186,7 @@ export default {
                       " จังหวัด " +
                       self.export_data.provinces_name +
                       " " +
-                      self.export_data.zip_code,
+                      self.export_data.person_zipcode,
                     colSpan: 3,
                     alignment: "left",
                   },
@@ -2372,7 +2376,7 @@ export default {
                       " จังหวัด " +
                       self.export_data.provinces_name +
                       " " +
-                      self.export_data.zip_code,
+                      self.export_data.person_zipcode,
 
                     colSpan: 3,
                     alignment: "left",

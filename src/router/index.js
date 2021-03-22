@@ -133,20 +133,7 @@ const routes = [{
                 path: "",
                 component: Calculation_criteria,
             },
-            {
-                path: "Add_criteria",
-                name: "Add_criteria",
-                meta: { breadCrumb: "ตั้งค่าอัตราการจ่ายค่าตอบแทนภาระงานสอน" },
-                component: {
-                    render(c) {
-                        return c("router-view");
-                    },
-                },
-                children: [{
-                    path: "",
-                    component: Add_criteria,
-                }, ],
-            },
+           
             {
                 path: "Detail_criteria",
                 name: "Detail_criteria",
@@ -164,6 +151,22 @@ const routes = [{
         ],
     },
 
+        //ตั้งค่าอัตราการจ่ายค่าตอบแทนภาระงานสอน
+        {
+            path: "/Add_criteria",
+            name: "Add_criteria",
+            meta: { breadCrumb: "ตั้งค่าอัตราการจ่ายค่าตอบแทนภาระงานสอน" },
+            component: {
+                render(c) {
+                    return c("router-view");
+                },
+            },
+            children: [{
+                path: "",
+                component: Add_criteria,
+            }],
+           
+        },
     // ตรวจสอบภาระงาน
     {
         path: "/Inspect_workload",

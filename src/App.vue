@@ -34,6 +34,7 @@
           >
             <router-link :to="{ path: '/' + system.Path }">
               <a-icon :type="system.icon" />
+               ๆ ๆๆ
               <span>{{ system.Name }}</span>
             </router-link>
           </a-menu-item>
