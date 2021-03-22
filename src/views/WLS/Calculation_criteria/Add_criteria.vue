@@ -102,7 +102,7 @@
           </a-col>
         </a-row>
 
-        <a-row :gutter="[8, 8]" style="text-align: start,padding: 1%" >
+        <a-row :gutter="[8, 8]" style="text-align: start,padding: 1%">
           <a-col :span="24" style="margin: 0.2em 0px"
             ><h1>
               กำหนดภาระงานเพื่อการจ่ายค่าตอบแทนสอนเกินของคณาจารย์ประจำที่ไม่ได้ดำรงตำแหน่งบริหาร
@@ -156,9 +156,7 @@
 
       <!-- STEP 1 -->
       <div v-if="current == 1">
-    
-
-    <a-row :gutter="[8, 8]">
+        <a-row :gutter="[8, 8]">
           <!-- วิชาในหลักสูตร -->
           <a-col :span="12" style="margin: 0.2em 0px; text-align: center">
             <a-card size="small">
@@ -169,7 +167,7 @@
               </a-row>
             </a-card>
 
-            <a-card size="small" >
+            <a-card size="small">
               <a-row :gutter="[8, 8]">
                 <a-col :span="24" style="margin: 0.2em 0px; text-align: center">
                   <h1>การสอนแบบบรรยาย</h1>
@@ -308,7 +306,6 @@
               </a-row>
             </a-card>
             <!-- สิ้นสุดการสอนแบบบรรยาย -->
-  
           </a-col>
 
           <!-- วิชาศึกษาทั่วไป วิชานอก -->
@@ -455,9 +452,7 @@
               </a-row>
             </a-card>
             <!-- สิ้นสุดเงื่อนไขค่าน้ำหนัก -->
-      
           </a-col>
-
         </a-row>
 
         <a-row :gutter="[8, 8]">
@@ -471,7 +466,6 @@
               </a-row>
             </a-card>
 
-      
             <a-card size="small">
               <a-row :gutter="[8, 8]">
                 <a-col :span="24" style="margin: 0.2em 0px; text-align: center">
@@ -624,7 +618,6 @@
               </a-row>
             </a-card>
 
-         
             <a-card size="small">
               <a-row :gutter="[8, 8]">
                 <a-col :span="24" style="margin: 0.2em 0px; text-align: center">
@@ -879,7 +872,6 @@
         </a-card>
         <!-- สิ้นสุด ส่วนตั้งค่าทั่วไป -->
 
-
         <!-- วิชาในหลักสูตร -->
         <a-row :gutter="[8, 8]">
           <a-col :span="12" style="margin: 0.2em 0px; text-align: center">
@@ -964,13 +956,12 @@
                 </a-col>
               </a-row>
             </a-card>
-         
           </a-col>
           <!-- สิ้นสุด วิชาในหลักสูตร -->
 
           <!-- วิชาศึกษาทั่วไป -->
           <a-col :span="12" style="margin: 0.2em 0px; text-align: center">
-                 <a-card size="small">
+            <a-card size="small">
               <a-row :gutter="[8, 8]">
                 <a-col :span="24" style="margin: 0.2em 0p">
                   <a-card-meta title="วิชาศึกษาทั่วไป"> </a-card-meta>
@@ -1051,17 +1042,13 @@
                 </a-col>
               </a-row>
             </a-card>
-            
-         
           </a-col>
         </a-row>
         <!-- สิ้นสุด วิชาศึกษาทั่วไป -->
 
-
-             <!-- วิชาในหลักสูตร -->
+        <!-- วิชาในหลักสูตร -->
         <a-row :gutter="[8, 8]">
           <a-col :span="12" style="margin: 0.2em 0px; text-align: center">
-     
             <a-card size="small">
               <a-row :gutter="[8, 8]">
                 <a-col :span="24" style="margin: 0.2em 0px; text-align: center">
@@ -1141,7 +1128,6 @@
 
           <!-- วิชาศึกษาทั่วไป -->
           <a-col :span="12" style="margin: 0.2em 0px; text-align: center">
-      
             <a-card size="small">
               <a-row :gutter="[8, 8]">
                 <a-col :span="24" style="margin: 0.2em 0px; text-align: center">
@@ -1219,7 +1205,6 @@
           </a-col>
         </a-row>
         <!-- สิ้นสุด วิชาศึกษาทั่วไป -->
-
       </div>
       <!-- END STEP 2-->
 
@@ -1376,13 +1361,47 @@ export default {
     validate_add() {
       //false กรุณากรอก ข้อมูลว่าง
       let check = null;
+       const today = new Date();
+      const year = today.getFullYear();
+      const Month = today.getMonth() + 1;
+      const Day = today.getDate();
+      const schedule_start_date_DATA = this.schedule_start_date.split("-");
 
+    let check_ymd  = null;
+      
+        if(parseInt(schedule_start_date_DATA[0]) < year )
+        {
+           console.log(  "ปี พ.ศ. น้อยกว่าปัจจุบัน");
+
+           this.$message.error(
+        "ปี พ.ศ. น้อยกว่าปัจจุบัน"
+      );
+                 check_ymd = false
+        }
+        else if (parseInt(schedule_start_date_DATA[1]) < Month ){
+            console.log(  "เดือน น้อยกว่าปัจจุบัน");
+             this.$message.error(
+        "เดือน น้อยกว่าปัจจุบัน"
+      );
+                 check_ymd = false
+        }else if(parseInt(schedule_start_date_DATA[2]) < Day){ 
+          console.log(  "วัน น้อยกว่าปัจจุบัน");
+           this.$message.error(
+        "วัน น้อยกว่าปัจจุบัน"
+      );
+      check_ymd = false
+          }
+          else{
+            check_ymd = true
+          }
+          
       if (this.current == 0) {
         if (
           this.schedule_name == null ||
           this.schedule_name == "" ||
           this.schedule_start_date == null ||
           this.schedule_start_date == "" ||
+          check_ymd == true ||
           this.schedule_per_credit == null ||
           this.schedule_per_credit == "" ||
           this.schedule_general_min == null ||
@@ -1425,8 +1444,6 @@ export default {
             check = false;
           } else {
             check = true;
-       
-            
           }
         }
 
@@ -1520,7 +1537,17 @@ export default {
       return check;
     },
     // บันทึก ตั้งค่าอัตราการจ่ายค่าตอบแทนภาระงานสอน
+    formatDate(date) {
+      var d = new Date(date),
+        month = "" + (d.getMonth() + 1),
+        day = "" + d.getDate(),
+        year = d.getFullYear();
 
+      if (month.length < 2) month = "0" + month;
+      if (day.length < 2) day = "0" + day;
+
+      return [year, month, day].join("-");
+    },
     Add_schedule() {
       const self = this;
       const today = new Date();
@@ -1534,25 +1561,29 @@ export default {
       this.$message.success(
         "บันทึกตั้งค่าอัตราการจ่ายค่าตอบแทนภาระงานสอนเสร็จสิ้น"
       );
-      // Update_status_schedule
-      axios
-        .post("http://localhost:8080/WlsRouters/Update_status_schedule")
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
 
       let Add_schedules = {
         schedule_name: this.schedule_name,
         schedule_start_date: this.schedule_start_date,
         schedule_create_by: "666",
         schedule_create_date: date,
+        schedule_status: 1,
         schedule_per_credit: parseInt(this.schedule_per_credit),
         schedule_general_min: parseInt(this.schedule_general_min),
         schedule_general_max: parseInt(this.schedule_general_max),
       };
+
+      // Update_status_schedule
+
+      if (Add_schedules.schedule_start_date == this.formatDate(new Date())) {
+        console.log(
+          "วันที่สร้างแล้ววันที่ปัจจุบันตรงกัน ให้ใช้ตัวที่สร้างใหม่"
+        );
+        Add_schedules.schedule_status = 1;
+      } else {
+        console.log("วันที่สร้างแล้ววันที่ปัจจุบันไม่ตรงกัน ให้ใช้ตัวเก่า");
+        Add_schedules.schedule_status = 0;
+      }
 
       console.log(Add_schedules);
       //  Add_schedules
@@ -1776,7 +1807,6 @@ export default {
     next() {
       // this.validate_add()
       if (this.validate_add()) {
-        console.log(this.current);
         this.current++;
       } else {
         this.$message.error("กรุณากรอกข้อมูลให้ครบก่อนไปลำดับถัดไป");
@@ -1790,7 +1820,15 @@ export default {
     },
     onChangedate(date, dateString) {
       console.log(date, dateString);
+
+
+
       this.schedule_start_date = dateString;
+
+     
+     
+
+
     },
     handleSearch(value) {
       fetch(value, (data) => (this.data = data));
