@@ -525,7 +525,7 @@ export default {
           text: "",
         },
         subtitle: {
-          text: "โดยนับจาก 10 อันดับแรก",
+          text: "โดยนับจาก 3 อันดับแรก",
         },
         xAxis: {
           categories: [],

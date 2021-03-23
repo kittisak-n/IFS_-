@@ -20,6 +20,7 @@
               <a-tooltip>
                 <template slot="title"> เพิ่มรายวิชา </template>
                 <a-button
+                  v-if="this.user_position == 1"
                   type="success"
                   icon="plus"
                   :style="{ marginRight: '3%' }"
@@ -70,9 +71,11 @@
                 :columns="course_columns"
                 :data-source="course_record"
                 :pagination="false"
-                size="large"
-                :scroll="{ y: 500 }"
+                size="small"
+           
                 bordered
+
+                
               >
                 <span slot="Action" slot-scope="record">
                   <a-tooltip>
@@ -139,7 +142,9 @@
           <a-col :span="24" :style="{ textAlign: 'center' }">
             <!-- <router-link :to="{ path: '/Show_course/InsertCourse' }"> -->
             <a-tooltip>
-              <template slot="title">ตัวอย่าง Format ที่ใช้ในการ Import</template>
+              <template slot="title"
+                >ตัวอย่าง Format ที่ใช้ในการ Import</template
+              >
               <a-button type="primary" style="width: 80%" @click="onExport">
                 ตัวอย่าง Format ที่ใช้ในการ Import
               </a-button>
@@ -152,10 +157,12 @@
         </a-row>
         <a-row>
           <a-col :span="24" :offset="2">
-            <span style="color:red">*</span><span> หมายเหตุ : ประเภทรายวิชา 0 = ในคณะ 1 = ศึกษาทั่วไป</span><br>
+            <span style="color: red">*</span
+            ><span> หมายเหตุ : ประเภทรายวิชา 0 = ในคณะ 1 = ศึกษาทั่วไป</span
+            ><br />
           </a-col>
-           <a-col :span="24" :offset="6">
-            <span> ผู้สอน = Username ของอาจารย์ผู้สอน</span><br>
+          <a-col :span="24" :offset="6">
+            <span> ผู้สอน = Username ของอาจารย์ผู้สอน</span><br />
           </a-col>
         </a-row>
         <br />
@@ -229,6 +236,7 @@
         <a-table
           :columns="course_detail_columns"
           :data-source="course_detail_data"
+              size="small"
         >
           <span slot="expandedRowRender" slot-scope="record">
             <a-row
@@ -347,6 +355,7 @@ export default {
     return {
       data_store: [],
       self: this,
+      user_position: 0,
 
       modal_edit_detail: false,
       modal_detail: false,
@@ -418,9 +427,31 @@ export default {
           title: "กลุ่ม",
           dataIndex: "section_number",
           key: "section_number",
-          width: "30%",
+          width: "20%",
           scopedSlots: {
             customRender: "section_number",
+          },
+          type: "flex",
+          align: "center",
+        },
+        {
+          title: "ภาคเรียน",
+          dataIndex: "section_term",
+          key: "section_term",
+          width: "20%",
+          scopedSlots: {
+            customRender: "section_term",
+          },
+          type: "flex",
+          align: "center",
+        },
+        {
+          title: "ปีการศึกษา",
+          dataIndex: "section_year",
+          key: "section_year",
+          width: "20%",
+          scopedSlots: {
+            customRender: "section_year",
           },
           type: "flex",
           align: "center",
@@ -429,7 +460,7 @@ export default {
           title: "รายละเอียดกลุ่ม",
           dataIndex: "section_name",
           key: "section_name",
-          width: "40%",
+          width: "20%",
           scopedSlots: {
             customRender: "section_name",
           },
@@ -440,7 +471,7 @@ export default {
           title: "จำนวนนักศึกษา",
           dataIndex: "section_student",
           key: "section_student",
-          width: "30%",
+          width: "20%",
           scopedSlots: {
             customRender: "section_student",
           },
@@ -669,23 +700,25 @@ export default {
           const ws = XLSX.utils.sheet_to_json(workbook.Sheets[wsname]); // Generate JSON table content，wb.Sheets[Sheet名]    Get the data of the first sheet
           // console.log(ws);
           // Edit data
-          let course_code = []; //จัดข้อมูล
+          var course_code = []; //จัดข้อมูล
           ws.forEach(function (ele, index) {
-            if (
-              (course_code.find((element) => element != ele.รหัสวิชา) &&
-                ele.รหัสวิชา) ||
-              index === 0
-            ) {
+            let findindex = course_code.findIndex(
+              (element) => parseInt(element) === parseInt(ele.รหัสวิชา)
+            );
+            if ((findindex === -1 && ele.รหัสวิชา) || index === 0) {
               course_code.push(ele.รหัสวิชา);
               self.setCoruse(ele);
-            } else if (course_code == ele.รหัสวิชา && ele.รหัสวิชา) {
+            } else if (findindex > -1 && ele.รหัสวิชา) {
+              console.log(123);
               self.setSection(ele);
             } else {
+              console.log(123);
               self.setSectionDate(ele);
             }
           }); //สิ้นสุดจัดข้อมูล
 
-          // console.log(self.data_course_import);
+          console.log(course_code);
+          console.log(self.data_course_import);
           this.import_filename = files[0].name;
           this.import_status = true;
         } catch (e) {
@@ -735,7 +768,7 @@ export default {
       // console.log("setSection");
       self.data_course_import[
         self.data_course_import.findIndex(
-          (element) => (element.course_code = ele.รหัสวิชา)
+          (element) => parseInt(element.course_code) == parseInt(ele.รหัสวิชา)
         )
       ].course_section.push({
         section_id: 0,
@@ -780,6 +813,7 @@ export default {
         course: self.data_course_import,
         course_term: self.select_course_term,
         course_year: self.select_course_year,
+        person_id: this.$store.state.user.user_id,
       })
         .then()
         .catch((err) => alert(err));
@@ -810,7 +844,6 @@ export default {
         })
         .catch((err) => alert(err));
     },
-
     get_course_detail(id) {
       const self = this;
 
@@ -822,7 +855,7 @@ export default {
         course_id: id,
       })
         .then((response) => {
-          // console.log(response.data.results);
+          console.log(response.data.results);
           if (response.data.results == 0) {
             // console.log("nodata");
             this.$info({
@@ -832,15 +865,13 @@ export default {
           } else {
             self.course_detail_data = [];
             response.data.results.forEach(function (ele) {
-              // console.log(
-              //   "Section Des :",
-              //   ele.section_date[0].section_detail_description
-              // );
               self.course_detail_data.push({
                 section_id: ele.section_id,
                 section_number: ele.section_number,
                 section_student: ele.section_student,
                 section_name: ele.section_name,
+                section_term: ele.section_term,
+                section_year: ele.section_year,
                 section_date: ele.section_date,
               });
             });
@@ -1976,10 +2007,23 @@ export default {
       pdfMake.createPdf(dd).open({}, window.open());
       self.data_store = [];
     },
+    get_position_user() {
+      let self = this;
+      console.log("user id :", this.$store.state.user.user_id);
+      Axios.post("http://localhost:8080/personRouters/getpositionAccessById", {
+        person_id: this.$store.state.user.user_id,
+      })
+        .then((response) => {
+          // console.log(response.data.results[0].position_access_id);
+          self.user_position = response.data.results[0].position_access_id;
+        })
+        .catch((err) => alert(err));
+    },
   },
   created() {
     this.get_all_sourse();
     this.Years_course();
+    this.get_position_user();
   },
 };
 </script>

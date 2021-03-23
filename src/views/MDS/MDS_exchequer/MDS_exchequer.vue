@@ -13,10 +13,10 @@
                 }"
               />
             </a-col>
-            <a-col :span="19" style="text-align:end">
-              <div class="text-head">วัสดุทังหมด</div>
+            <a-col :span="19" style="text-align: end">
+              <div class="text-head">วัสดุทั้งหมด</div>
               <div>
-                <span class="text-number ">
+                <span class="text-number">
                   {{ this.material_report.total }}
                 </span>
                 รายการ
@@ -38,10 +38,10 @@
                 }"
               />
             </a-col>
-            <a-col :span="19" style="text-align:end">
+            <a-col :span="19" style="text-align: end">
               <div class="text-head">รายการวัสดุที่เบิกได้</div>
               <div>
-                <span class="text-number ">
+                <span class="text-number">
                   {{ this.material_report.reveal + " " }}
                 </span>
                 รายการ
@@ -62,10 +62,10 @@
                 }"
               />
             </a-col>
-            <a-col :span="19" style="text-align:end">
+            <a-col :span="19" style="text-align: end">
               <div class="text-head">รายการวัสดุที่งดเบิก</div>
               <div>
-                <span class="text-number ">
+                <span class="text-number">
                   {{ this.material_report.unreveal }}
                 </span>
                 รายการ
@@ -87,10 +87,10 @@
                 }"
               />
             </a-col>
-            <a-col :span="20" style="text-align:end">
+            <a-col :span="20" style="text-align: end">
               <div class="text-head">รายการวัสดุใกล้หมดคลัง</div>
               <div>
-                <span class="text-number ">
+                <span class="text-number">
                   {{ this.material_report.depleted }}
                 </span>
                 รายการ
@@ -112,10 +112,10 @@
                 }"
               />
             </a-col>
-            <a-col :span="20" style="text-align:end">
+            <a-col :span="20" style="text-align: end">
               <div class="text-head">รายการวัสดุหมดคลัง</div>
               <div>
-                <span class="text-number ">
+                <span class="text-number">
                   {{ this.material_report.undepleted }}
                 </span>
                 รายการ
@@ -130,7 +130,7 @@
       <a-col :xs="24" :sm="24" :md="24" :lg="24" :xxl="24">
         <a-card size="small">
           <a-row :gutter="[8, 8]">
-            <a-col :span="20" style="margin: 0.2em 0px;">
+            <a-col :span="20" style="margin: 0.2em 0px">
               <a-card-meta title="รายการวัสดุ/อุปกรณ์ : ปี 2563">
                 <a-icon
                   slot="avatar"
@@ -162,33 +162,27 @@
               </a-button>
             </a-col>
           </a-row>
-          <hr style="width:100%" />
+          <hr style="width: 100%" />
           <a-row :gutter="[8, 8]" type="flex" justify="end">
-            <a-col :span="3" style="text-align:end">
+            <a-col :span="3" style="text-align: end">
               <a-select
                 :default-value="0"
                 style="width: 100%"
                 v-model="status_search"
                 @change="changeCondition()"
               >
-                <a-select-option :value="0">
-                  วัสดุทั้งหมด
-                </a-select-option>
+                <a-select-option :value="0"> วัสดุทั้งหมด </a-select-option>
                 <a-select-option :value="1">
                   วัสดุที่สามารถเบิกได้
                 </a-select-option>
-                <a-select-option :value="2">
-                  วัสดุงดเบิก
-                </a-select-option>
+                <a-select-option :value="2"> วัสดุงดเบิก </a-select-option>
                 <a-select-option :value="3">
                   วัสดุใกล้หมดสต๊อก
                 </a-select-option>
-                <a-select-option :value="4">
-                  วัสดุหมดสต๊อก
-                </a-select-option>
+                <a-select-option :value="4"> วัสดุหมดสต๊อก </a-select-option>
               </a-select>
             </a-col>
-            <a-col :span="5" style="text-align:end">
+            <a-col :span="5" style="text-align: end">
               <a-input-search
                 placeholder="ค้นหาตามรหัส หรือ ชื่อวัสดุ"
                 style="width: 100%"
@@ -226,7 +220,8 @@
                     {{ record.material_catergory }}
                   </div>
                   <div :style="{ textAlign: 'left', fontSize: '16px' }">
-                    <b>จำนวนขั้นต่ำ : </b> {{ record.material_minimun }}
+                    <b>จำนวนขั้นต่ำ : </b>
+                    {{ record.material_minimun }}
                   </div>
                   <div :style="{ textAlign: 'left', fontSize: '16px' }">
                     <b>หน่วยนับ : </b> {{ record.material_unit }}
@@ -273,24 +268,24 @@
                     </router-link>
                   </div>
                 </span>
-                <span slot="material_import" slot-scope="text">
+                <span slot="material_import" slot-scope="text, record">
                   <div :style="{ textAlign: 'center', fontSize: '16px' }">
-                    {{ text }}
+                    {{ moneyFormat(parseInt(record.material_import)) }}
                   </div>
                 </span>
-                <span slot="material_export" slot-scope="text">
+                <span slot="material_export" slot-scope="text, record">
                   <div :style="{ textAlign: 'center', fontSize: '16px' }">
-                    {{ text }}
+                    {{ moneyFormat(parseInt(record.material_export)) }}
                   </div>
                 </span>
-                <span slot="material_adjust" slot-scope="text">
+                <span slot="material_adjust" slot-scope="text, record">
                   <div :style="{ textAlign: 'center', fontSize: '16px' }">
-                    {{ text }}
+                    {{ moneyFormat(parseInt(record.material_adjust)) }}
                   </div>
                 </span>
-                <span slot="material_balance" slot-scope="text">
+                <span slot="material_balance" slot-scope="text, record">
                   <div :style="{ textAlign: 'center', fontSize: '16px' }">
-                    {{ text }}
+                    {{ moneyFormat(parseInt(record.material_balance)) }}
                   </div>
                 </span>
               </a-table>
@@ -325,18 +320,10 @@
                 v-model="PageSize"
                 :style="{ width: '60px', marginRight: '1%' }"
               >
-                <a-select-option value="10">
-                  10
-                </a-select-option>
-                <a-select-option value="25">
-                  25
-                </a-select-option>
-                <a-select-option value="50">
-                  50
-                </a-select-option>
-                <a-select-option value="100">
-                  100
-                </a-select-option>
+                <a-select-option value="10"> 10 </a-select-option>
+                <a-select-option value="25"> 25 </a-select-option>
+                <a-select-option value="50"> 50 </a-select-option>
+                <a-select-option value="100"> 100 </a-select-option>
               </a-select>
 
               <a-pagination
@@ -374,19 +361,15 @@
               :src="material.material_image"
               alt="avatar"
             />
-            <div style="width:auto" v-else>
+            <div style="width: auto" v-else>
               <a-icon :type="loading ? 'loading' : 'plus'" />
-              <div class="ant-upload-text">
-                เลือกรูปวัสดุ
-              </div>
+              <div class="ant-upload-text">เลือกรูปวัสดุ <br /> ขนาดรูปไม่เกิน 20 KB</div>
             </div>
           </a-upload>
         </a-col>
         <a-col :span="13">
           <a-row :gutter="[8, 8]">
-            <a-col :span="24" class="label">
-              ชื่อวัสดุ
-            </a-col>
+            <a-col :span="24" class="label"> ชื่อวัสดุ </a-col>
             <a-col :span="24">
               <a-input
                 width="100%"
@@ -394,9 +377,7 @@
                 v-model="material.material_name"
               />
             </a-col>
-            <a-col :span="24" class="label">
-              หมวดหมู่วัสดุ
-            </a-col>
+            <a-col :span="24" class="label"> หมวดหมู่วัสดุ </a-col>
             <a-col :span="24">
               <a-select
                 v-model="material.material_type"
@@ -415,12 +396,8 @@
                 </a-select-option>
               </a-select>
             </a-col>
-            <a-col :span="14" class="label">
-              จำนวนขั้นต่ำ
-            </a-col>
-            <a-col :span="10" class="label">
-              หน่วยนับ
-            </a-col>
+            <a-col :span="14" class="label"> จำนวนขั้นต่ำ </a-col>
+            <a-col :span="10" class="label"> หน่วยนับ </a-col>
             <a-col :span="14">
               <a-input
                 width="100%"
@@ -444,17 +421,11 @@
                 </a-select-option>
               </a-select>
             </a-col>
-            <a-col :span="24" class="label">
-              สถานะการเบิกจ่าย
-            </a-col>
+            <a-col :span="24" class="label"> สถานะการเบิกจ่าย </a-col>
             <a-col :span="24">
               <a-select v-model="material.material_status" style="width: 100%">
-                <a-select-option :value="1">
-                  เบิกได้
-                </a-select-option>
-                <a-select-option :value="2">
-                  งดเบิก
-                </a-select-option>
+                <a-select-option :value="1"> เบิกได้ </a-select-option>
+                <a-select-option :value="2"> งดเบิก </a-select-option>
               </a-select>
             </a-col>
           </a-row>
@@ -463,9 +434,7 @@
       <template slot="footer">
         <a-row :gutter="[8, 8]">
           <a-col :span="12" :style="{ textAlign: 'start' }">
-            <a-button type="danger">
-              ยกเลิก
-            </a-button>
+            <a-button type="danger"> ยกเลิก </a-button>
           </a-col>
           <a-col :span="12">
             <a-button type="success" icon="save" @click="savematerial()">
@@ -609,7 +578,7 @@ export default {
       const self = this;
       axios
         .post(self.$store.state.url + "/materialRouters/getMaterialTotal")
-        .then(function(res) {
+        .then(function (res) {
           self.material_report = res.data.results[0];
         });
     },
@@ -640,13 +609,13 @@ export default {
         .post(self.$store.state.url + "/materialRouters/getRecordMaterial", {
           condition: self.condition,
         })
-        .then(function(response) {
+        .then(function (response) {
           console.log(response);
           self.total_search = response.data.results[0].total_Row;
           // const data = response.data;
           self.getMaterialByCondition();
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
         });
     },
@@ -663,18 +632,18 @@ export default {
             end: self.end_search,
           }
         )
-        .then(function(response) {
+        .then(function (response) {
           console.log(response);
           const data = response.data;
           self.generateMaterial(data.results);
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
         });
     },
     generateMaterial(Material) {
       const self = this;
-      Material.forEach(function(ele) {
+      Material.forEach(function (ele) {
         let materail = {
           key: ele.num,
           material_id: ele.material_id,
@@ -731,9 +700,9 @@ export default {
       const self = this;
       axios
         .post(self.$store.state.url + "/unitRouters/getAllUnit")
-        .then(function(res) {
+        .then(function (res) {
           console.log(res);
-          res.data.results.forEach(function(ele, index) {
+          res.data.results.forEach(function (ele, index) {
             let eleUnit = {
               key: index + 1,
               unit_id: ele.unit_id,
@@ -742,7 +711,7 @@ export default {
             self.unit.push(eleUnit);
           });
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
         });
     },
@@ -750,9 +719,9 @@ export default {
       const self = this;
       axios
         .post(self.$store.state.url + "/typeRouters/getAlltype")
-        .then(function(res) {
+        .then(function (res) {
           console.log(res);
-          res.data.results.forEach(function(ele, index) {
+          res.data.results.forEach(function (ele, index) {
             let eleUnit = {
               key: index + 1,
               type_id: ele.type_id,
@@ -762,7 +731,7 @@ export default {
           });
           console.log(self.type);
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
         });
     },
@@ -845,7 +814,7 @@ export default {
           self.$store.state.url + "/materialRouters/insertMaterial",
           self.material
         )
-        .then(function(res) {
+        .then(function (res) {
           console.log(res);
           self.$notification["success"]({
             message: "เพิ่มข้อมูลวัสดุเสร็จสิ้น",
@@ -854,7 +823,7 @@ export default {
           self.getMaterialReport();
           self.getMaterialRecord();
         })
-        .catch(function(err) {
+        .catch(function (err) {
           console.log(err);
           self.$notification["error"]({
             message: "เพิ่มข้อมูลวัสดุไม่สำเร็จ",
@@ -869,7 +838,7 @@ export default {
           self.$store.state.url + "/materialRouters/updateMaterial",
           self.material
         )
-        .then(function(res) {
+        .then(function (res) {
           console.log(res);
           self.$notification["success"]({
             message: "แก้ไขข้อมูลวัสดุเสร็จสิ้น",
@@ -879,7 +848,7 @@ export default {
           self.getMaterialRecord();
           self.material_id = null;
         })
-        .catch(function(err) {
+        .catch(function (err) {
           console.log(err);
           self.$notification["error"]({
             message: "เพิ่มข้อมูลวัสดุไม่สำเร็จ",
@@ -891,8 +860,8 @@ export default {
       let self = this;
       axios
         .post(self.$store.state.url + "/materialRouters/getMt")
-        .then(function(res) {
-          res.data.results.forEach(function(ele, index) {
+        .then(function (res) {
+          res.data.results.forEach(function (ele, index) {
             self.data_store.push({
               number: index + 1,
               serial_number: ele.material_code,
@@ -1083,6 +1052,14 @@ export default {
           self.data_store = [];
           pdfMake.createPdf(docDefinition).open({}, window.open());
         });
+    },
+    moneyFormat(price) {
+      const pieces = parseFloat(price).toFixed(2).split("");
+      let ii = pieces.length - 3;
+      while ((ii -= 3) > 0) {
+        pieces.splice(ii, 0, ",");
+      }
+      return pieces.join("");
     },
   },
   created() {

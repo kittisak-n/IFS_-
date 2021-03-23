@@ -332,6 +332,14 @@ export default {
           console.error(err);
         });
     },
+     moneyFormat(price) {
+  const pieces = parseFloat(price).toFixed(2).split('')
+  let ii = pieces.length - 3
+  while ((ii-=3) > 0) {
+    pieces.splice(ii, 0, ',')
+  }
+  return pieces.join('')
+},
     genDate() {
       const self = this;
 
@@ -1853,7 +1861,7 @@ export default {
                       " )",
                   },
                   {
-                    text: self.receipt_data[0].summary_detail_seq,
+                    text: this.moneyFormat(self.receipt_data[0].summary_detail_seq),
                     alignment: "center",
                   },
                   { text: "-", alignment: "center" },
@@ -1861,7 +1869,7 @@ export default {
                 [
                   { text: "รวมเงิน", alignment: "right", style: "tableHeader" },
                   {
-                    text: self.receipt_data[0].summary_detail_seq,
+                    text: this.moneyFormat(self.receipt_data[0].summary_detail_seq),
                     alignment: "center",
                     style: "tableHeader",
                   },
@@ -2044,7 +2052,7 @@ export default {
                       " )",
                   },
                   {
-                    text: self.receipt_data[1].summary_detail_seq,
+                    text: this.moneyFormat(self.receipt_data[1].summary_detail_seq),
                     alignment: "center",
                   },
                   { text: "-", alignment: "center" },
@@ -2052,7 +2060,7 @@ export default {
                 [
                   { text: "รวมเงิน", alignment: "right", style: "tableHeader" },
                   {
-                    text: self.receipt_data[1].summary_detail_seq,
+                    text: this.moneyFormat(self.receipt_data[1].summary_detail_seq),
                     alignment: "center",
                     style: "tableHeader",
                   },
@@ -2235,7 +2243,7 @@ export default {
                       " )",
                   },
                   {
-                    text: self.receipt_data[2].summary_detail_seq,
+                    text: this.moneyFormat(self.receipt_data[2].summary_detail_seq),
                     alignment: "center",
                   },
                   { text: "-", alignment: "center" },
@@ -2243,7 +2251,7 @@ export default {
                 [
                   { text: "รวมเงิน", alignment: "right", style: "tableHeader" },
                   {
-                    text: self.receipt_data[2].summary_detail_seq,
+                    text: this.moneyFormat(self.receipt_data[2].summary_detail_seq),
                     alignment: "center",
                     style: "tableHeader",
                   },
@@ -2426,7 +2434,7 @@ export default {
                       " )",
                   },
                   {
-                    text: self.receipt_data[3].summary_detail_seq,
+                    text: this.moneyFormat(self.receipt_data[3].summary_detail_seq),
                     alignment: "center",
                   },
                   { text: "-", alignment: "center" },
@@ -2434,7 +2442,7 @@ export default {
                 [
                   { text: "รวมเงิน", alignment: "right", style: "tableHeader" },
                   {
-                    text: self.receipt_data[3].summary_detail_seq,
+                    text: this.moneyFormat(self.receipt_data[3].summary_detail_seq),
                     alignment: "center",
                     style: "tableHeader",
                   },
@@ -2631,11 +2639,11 @@ export default {
                   { text: self.export_data.person_name },
                   { text: self.export_data.summary_bonus, style: "number" },
                   {
-                    text: self.export_data.schedule_per_credit,
+                    text: this.moneyFormat(self.export_data.schedule_per_credit),
                     style: "number",
                   },
-                  { text: self.export_data.summary_salary, style: "number" },
-                  { text: self.export_data.summary_lesson, style: "number" },
+                  { text: this.moneyFormat(self.export_data.summary_salary), style: "number" },
+                  { text: this.moneyFormat(self.export_data.summary_lesson), style: "number" },
                 ],
                 [
                   {
@@ -2651,15 +2659,15 @@ export default {
                     style: ["tableHeader", "number"],
                   },
                   {
-                    text: self.export_data.schedule_per_credit,
+                    text: this.moneyFormat(self.export_data.schedule_per_credit),
                     style: ["tableHeader", "number"],
                   },
                   {
-                    text: self.export_data.summary_salary,
+                    text: this.moneyFormat(self.export_data.summary_salary),
                     style: ["tableHeader", "number"],
                   },
                   {
-                    text: self.export_data.summary_lesson,
+                    text: this.moneyFormat(self.export_data.summary_lesson),
                     style: ["tableHeader", "number"],
                   },
                 ],
@@ -2676,7 +2684,7 @@ export default {
             margin: [0, 5, 0, 0],
             text:
               "งบดำเนินงาน หมวดค่าตอบแทนใช้สอยและวัสดุ เป็นเงิน " +
-              self.export_data.summary_lesson +
+              this.moneyFormat(self.export_data.summary_lesson) +
               " บาท",
           },
           {
@@ -2908,7 +2916,7 @@ export default {
               },
               {
                 width: 100,
-                text: self.export_data.summary_salary + "  บาท",
+                text: this.moneyFormat(self.export_data.summary_salary) + "  บาท",
                 alignment: "center",
               },
               {
@@ -2917,7 +2925,7 @@ export default {
                 alignment: "left",
               },
               {
-                text: self.export_data.summary_lesson + " บาท",
+                text: this.moneyFormat(self.export_data.summary_lesson) + " บาท",
                 alignment: "center",
               },
             ],

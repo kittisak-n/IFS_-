@@ -178,19 +178,19 @@
                     {{ text }}
                   </div>
                 </span>
-                <span slot="purchase_order_paymant" slot-scope="text">
+                <span slot="purchase_order_paymant" slot-scope="text,record">
                   <div :style="{ textAlign: 'center' }">
-                    {{ text }}
+                    {{ moneyFormat(parseInt(record.purchase_order_paymant)) }}
                   </div>
                 </span>
-                <span slot="purchase_order_vat" slot-scope="text">
+                <span slot="purchase_order_vat" slot-scope="text,record">
                   <div :style="{ textAlign: 'center' }">
-                    {{ text }}
+                    {{ moneyFormat(parseInt(record.purchase_order_vat)) }}
                   </div>
                 </span>
-                <span slot="purchase_order_paymant_total" slot-scope="text">
+                <span slot="purchase_order_paymant_total" slot-scope="text,record">
                   <div :style="{ textAlign: 'center' }">
-                    {{ text }}
+                    {{ moneyFormat(parseInt(record.purchase_order_paymant_total)) }}
                   </div>
                 </span>
                 <span slot="purchase_order_creator" slot-scope="text">
@@ -290,17 +290,17 @@
           <p><b>ผู้ตรวจรับ</b> : {{ purchase.purchase_order_creator }}</p>
         </a-col>
         <a-col :span="8">
-          <p><b>จำนวน</b> : {{ purchase.purchase_order_total }} รายการ</p>
+          <p><b>จำนวน</b> : {{  purchase.purchase_order_total }} รายการ</p>
         </a-col>
         <a-col :span="8">
-          <p><b>ยอดชำระ</b> : {{ purchase.purchase_order_paymant }} บาท</p>
+          <p><b>ยอดชำระ</b> : {{  moneyFormat(parseInt(purchase.purchase_order_paymant)) }} บาท</p>
         </a-col>
         <a-col :span="8">
-          <p><b>ภาษี (7%)</b> : {{ purchase.purchase_order_vat }} บาท</p>
+          <p><b>ภาษี (7%)</b> : {{  moneyFormat(parseInt(purchase.purchase_order_vat)) }} บาท</p>
         </a-col>
         <a-col :span="8">
           <p>
-            <b>ยอดชำระสุทธิ</b> :{{ purchase.purchase_order_paymant_total }} บาท
+            <b>ยอดชำระสุทธิ</b> :{{ moneyFormat(parseInt(purchase.purchase_order_paymant_total) ) }} บาท
           </p>
         </a-col>
       </a-row>
@@ -712,6 +712,14 @@ export default {
         .catch(function(error) {
           console.log(error);
         });
+    },
+     moneyFormat(price) {
+      const pieces = parseFloat(price).toFixed(2).split("");
+      let ii = pieces.length - 3;
+      while ((ii -= 3) > 0) {
+        pieces.splice(ii, 0, ",");
+      }
+      return pieces.join("");
     },
     getPurchaseOrder() {
       const self = this;

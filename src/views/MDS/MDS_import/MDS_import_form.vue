@@ -82,17 +82,7 @@
                 "
               />
             </a-col>
-            <a-col :span="2" :style="{ textAlign: 'end', margin: '0.2em 0px' }">
-              <b>จำนวน</b> :
-            </a-col>
-            <a-col :span="3">
-              <a-input
-                disabled
-                type="number"
-                min="1"
-                :value="PurchaseOrder.purchase_suppiles.length"
-              />
-            </a-col>
+            
           </a-row>
           <a-row :gutter="[8, 8]">
             <a-col :span="24" :style="{ fontSize: '120%' }">

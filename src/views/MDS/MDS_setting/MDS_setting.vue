@@ -74,6 +74,16 @@
             bordered
             size="small"
           >
+
+    
+
+
+                <span slot="key" slot-scope="text">
+                  <div style="text-align: center">
+                    {{ text == null ? "0" : text }}
+                  </div>
+                </span>
+
             <span slot="type_name" slot-scope="text, record, index">
               <div
                 :style="{ textAlign: 'center' }"
@@ -126,9 +136,15 @@
             bordered
             size="small"
           >
+            <span slot="key" slot-scope="text">
+                  <div style="text-align: center">
+                    {{ text == null ? "0" : text }}
+                  </div>
+                </span>
+
             <span slot="unit_name" slot-scope="text, record, index">
               <div
-                :style="{ textAlign: 'center' }"
+                :style="{ textAlign: 'left' }"
                 v-if="mds_unit_data[index].status_edit"
               >
                 {{ text }}
@@ -186,22 +202,22 @@ export default {
           title: "ลำดับ",
           dataIndex: "key",
           key: "key",
-          width: "5%",
+          width: "10%",
           scopedSlots: { customRender: "key" },
-          styles: "ant-table",
+   
         },
         {
           title: "ชื่อยูนิควัสดุ",
           dataIndex: "unit_name",
           key: "unit_name",
-          width: "20%",
+          width: "50%",
           scopedSlots: { customRender: "unit_name" },
         },
         {
           title: "ดำเนินการ",
           dataIndex: "action",
           key: "action",
-          width: "20%",
+
           scopedSlots: { customRender: "action" },
         },
       ],
@@ -211,9 +227,9 @@ export default {
           title: "ลำดับ",
           dataIndex: "key",
           key: "key",
-          width: "5%",
+          width: "1%",
           scopedSlots: { customRender: "key" },
-          styles: "ant-table",
+       
         },
 
         {
@@ -227,14 +243,14 @@ export default {
           title: "ชื่อประเภทวัสดุ",
           dataIndex: "type_name",
           key: "type_name",
-          width: "20%",
+          width: "5%",
           scopedSlots: { customRender: "type_name" },
         },
         {
           title: "ดำเนินการ",
           dataIndex: "action",
           key: "action",
-          width: "20%",
+          width: "5%",
           scopedSlots: { customRender: "action" },
         },
       ],
